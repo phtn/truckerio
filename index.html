@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>trucker.io</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <meta name="theme-color" content="#222">
+    <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
+    <script src="http://www.polymer-project.org/components/webcomponentsjs/webcomponents.js"></script>
+   
+    <link rel="import" href="http://www.polymer-project.org/components/font-roboto/roboto.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-input/paper-input.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-slider/paper-slider.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-tabs/paper-tabs.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-button/paper-button.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-tabs/paper-tab.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-dialog/paper-dialog.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-dialog/paper-dialog-transition.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-dialog/paper-action-dialog.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-dialog/paper-dialog-base.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-menu-button/paper-menu-button.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-ripple/paper-ripple.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-dropdown/paper-dropdown.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-dropdown-menu/paper-dropdown-menu.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-item/paper-item.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-icon/core-icon.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-icons/maps-icons.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-icons/image-icons.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-icons/social-icons.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-icons/hardware-icons.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-icons/av-icons.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-pages/core-pages.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-range/core-range.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-animated-pages/core-animated-pages.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-animated-pages/transitions/hero-transition.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-animated-pages/transitions/cross-fade.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-animated-pages/transitions/core-transition-pages.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-animated-pages/transitions/cascade-transition.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-animated-pages/transitions/slide-up.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-animated-pages/transitions/slide-down.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-animated-pages/transitions/slide-from-right.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-animated-pages/transitions/tile-cascade.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-toolbar/core-toolbar.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-transition/core-transition.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-transition/core-transition-css.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-shadow/paper-shadow.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="http://www.polymer-project.org/components/polymer-ui-elements/polymer-ui-elements.html">
+    <link rel="import" href="http://www.polymer-project.org/components/polymer-ui-card/polymer-ui-card.html">
+    <link rel="import" href="http://www.polymer-project.org/components/polymer-ui-weather/polymer-ui-weather.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-toast/paper-toast.html">
+    <link rel="import" href="/components/bower_components/core-icons/core-icons.html">
+
+    <!-- FONTS -->
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:300|Dosis:500' rel='stylesheet' type='text/css'>
+
+    <!-- SAVED ELEMENT --
+      <link rel="import" href="elements/saved.html"> 
+    
+  
+  <link rel="stylesheet" href="style.css"> -->
+    <script type ="text/javascript"
+            src  ="http://maps.googleapis.com/maps/api/js?&sensor=false"></script>
+    <script src="js/nome-0.1.9.js" type="text/javascript"></script>
+
+</head>
+
+<body unresolved vertical layout onLoad="initialize()">
+
+    <paper-shadow z="1">
+        <core-toolbar flex>
+            <paper-icon-button icon="explore" style="color:#4285f4"></paper-icon-button>
+            <span flex>TRUCKER APP &nbsp;&copy;</span>
+            <paper-menu-button relative halign="right">
+                <paper-icon-button icon="menu" noink></paper-icon-button>
+                <paper-dropdown class="dropdown core-transition" halign="right" valign="top">
+                    <core-menu class="menu">
+                        <style>
+                            paper-item {
+                                border-bottom: 1px solid #ccc;
+                            }
+                            .more {
+                                height: 18px;
+                                width: 18px;
+                                margin-right: 12px;
+                            }
+                        </style>
+                        <paper-item>
+                            <core-icon icon="social:person" class="more"></core-icon><span>Login</span>
+                        </paper-item>
+                        <paper-item>
+                            <core-icon icon="settings" class="more"></core-icon><span>Settings</span>
+                        </paper-item>
+                        <paper-item style="border-bottom: none">
+                            <core-icon icon="help" class="more"></core-icon>Help</paper-item>
+                    </core-menu>
+                </paper-dropdown>
+            </paper-menu-button>
+        </core-toolbar>
+    </paper-shadow>
+
+    <paper-tabs selected="0">
+        <paper-tab onclick="document.querySelector('#live-toast').show()">
+            <paper-icon-button icon="subject"></paper-icon-button>
+        </paper-tab>
+        <paper-tab onclick="document.querySelector('#widgets-toast').show()">
+            <paper-icon-button icon="apps"></paper-icon-button>
+        </paper-tab>
+        <paper-tab onclick="document.querySelector('#saved-toast').show()">
+            <paper-icon-button icon="turned-in"></paper-icon-button>
+        </paper-tab>
+        <paper-tab onclick="document.querySelector('#reports-toast').show()">
+            <paper-icon-button icon="dashboard"></paper-icon-button>
+        </paper-tab>
+    </paper-tabs>
+    <style>
+    </style>
+    <!-- TOAST -->
+    <paper-toast id="live-toast" text="News & Updates" duration="5500"></paper-toast>
+    <paper-toast id="widgets-toast" text="Trip Calculator" duration="5500"></paper-toast>
+    <paper-toast id="saved-toast" text="Saved List" duration="5500"></paper-toast>
+    <paper-toast id="reports-toast" text="Tools Dashboard" duration="5500"></paper-toast>
+
+    <core-animated-pages flex transitions="slide-up slide-down cross-fade tile-cascade" class="widgets" selected="0">
+        <div verical layout flex crossfade slide-up style="background-color: #eee">
+            <div id="cards" cross-fade slide-up id="top">
+                <polymer-ui-card swipeable touch-action="pan-y" class="feed">
+                    Latest News
+                </polymer-ui-card>
+
+                <polymer-ui-card swipeable touch-action="pan-y" class="feed">Truck Parts &copy;</polymer-ui-card>
+                <polymer-ui-card swipeable touch-action="pan-y" class="feed">Ads</polymer-ui-card>
+                <polymer-ui-card swipeable touch-action="pan-y" class="feed">Ads 2</polymer-ui-card>
+            </div>
+            <script>
+                document.addEventListener('polymer-ready', function () {
+                    document.querySelector('#cards').addEventListener(
+                        'polymer-card-swipe-away', function (e) {
+                            e.target.parentNode.removeChild(e.target);
+                        });
+                })
+            </script>
+            <style>
+                #cards {
+                    margin: 0 auto;
+                    //background: #eee;
+                    overflow: auto;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                }
+                polymer-ui-card {
+                    display: block;
+                    height: 100px;
+                    width: 100%;
+                    margin: 5px auto;
+                    padding: 30px;
+                }
+            </style>
+        </div>
+        <div>
+            <!-- TRIP CALCULATOR-->
+
+            <style>
+                #sms {
+                    margin: 0 auto;
+                    display: block;
+                    padding: 10px;
+                    height: inherit;
+                    width: inherit;
+                    border: solid 1px #4285f4;
+                    outline: none;
+                }
+                #tripPaste {
+                    margin: 0 auto;
+                    padding-top: 20px;
+                }
+                #tripPaste span {
+                    font-weight: bold;
+                    color: #444
+                }
+                #submiticon {
+                    color: green;
+                    margin-left: 5px;
+                }
+                #submitlbl {
+                    color: green;
+                }
+                #cancelicon {
+                    color: red;
+                    margin-left: 5px
+                }
+                #cancellbl {
+                    color: #222;
+                }
+                #submitlbl:disabled {
+                    background-color: #fff
+                }
+            </style>
+
+            <div style="height:400px;width: inherit;" cross-fade slide-up>
+                <div flex one id="tripPaste" style="margin-bottom:20px; text-align:center;"><span>Paste SMS <core-icon icon="speaker-notes"></core-icon> below</span>
+                </div>
+                <div flex three>
+                    <textarea id="sms" cols="25" rows="8" onchange="findMe()"></textarea>
+                </div>
+                <div horizontal layout flex two style="">
+                    <div flex one></div>
+                    <div flex two>
+                        <paper-button id="cancellbl" onclick="clearMe()">Clear
+                            <core-icon icon="cancel" id="cancelicon"></core-icon>
+                        </paper-button>
+                    </div>
+                    <div flex two>
+                        <a href="#first-stage">
+                            <paper-button id="submitlbl" onclick="">Calculate
+                                <core-icon icon="check" id="submiticon"></core-icon>
+                            </paper-button>
+                        </a>
+                    </div>
+                    <div flex one></div>
+                </div>
+                <div flex five style="margin-bottom: 5px;padding-top:150px"></div>
+
+                <!-- FIRST STAGE -->
+                <style>
+                </style>
+                <div style="margin-top: 2px" id="first-stage" class="first-stage">
+                    <paper-shadow z="1">
+                        <div horizontal layout style="background-color:#4285f4;">
+                            <div style="padding-top:5px;height:30px;margin-left:5px">
+                                <core-icon icon="speaker-notes"></core-icon>
+                            </div>
+                            <div flex self-center style="font-weight:bold;height:25px">From SMS Data Results</div>
+                        </div>
+                    </paper-shadow>
+                    <style>
+                        #ptimeleft span,
+                        #dtimeleft span {
+                            font-size: 15px;
+                            color: #666;
+                        }
+                        #ploc span,
+                        #dloc span {
+                            color: #4285f4;
+                        }
+                        #gray {
+                            color: #ccc;
+                        }
+                        .order-num {
+                            text-align: left;
+                            padding-top: 3px;
+                            margin-left: 10px;
+                            margin-right: 10px;
+                            font-weight: bolder;
+                            color: #4285f4;
+                        }
+                        .help {
+                            color: #ccc;
+                            margin-right: 5px;
+                            padding: 0px
+                        }
+                        .result-icon {
+                            margin: 5px 10px 10px 5px;
+                            color: #4285f4;
+                        }
+                        .result-disp {
+                            margin-top: 7px;
+                            border-bottom: dotted 1px #ccc;
+                        }
+                        .result-disp-timer {
+                            margin-top: 5px
+                        }
+                        .help-timeleft {
+                            margin-top: 7px;
+                        }
+                    </style>
+                    <div flex two class="order-num"><span id="orderNum">ORDER: </span>
+                    </div>
+                    <div flex three style="background-color:#fff;color:#222;">
+                        <div style="margin: 15px 10px 5px 10px;font-weight: bold;"><span>Pick-Up Details</span>
+                        </div>
+                        <div horizontal layout>
+                            <div>
+                                <core-icon icon="maps:place" class="result-icon"></core-icon>
+                            </div>
+                            <div flex two class="result-disp"><span id="ploc">Location</span>
+                            </div>
+                            <div class="result-disp">
+                                <paper-icon-button icon="help" class="help" id="help-pu-location" onclick="document.getElementById('p-help-location').toggle()"></paper-icon-button>
+                            </div>
+                        </div>
+                        <div horizontal layout>
+                            <div>
+                                <core-icon icon="today" class="result-icon"></core-icon>
+                            </div>
+                            <div flex two class="result-disp"><span id="pdate">Date</span>
+                            </div>
+                            <div class="result-disp">
+                                <paper-icon-button icon="help" class="help" id="help-pu-date" onclick="document.getElementById('p-help-date').toggle()"></paper-icon-button>
+                            </div>
+                        </div>
+                        <div horizontal layout>
+                            <div>
+                                <core-icon icon="hardware:watch" class="result-icon"></core-icon>
+                            </div>
+                            <div flex two class="result-disp"><span id="ptime">Time</span>
+                            </div>
+                            <div class="result-disp">
+                                <paper-icon-button icon="help" class="help" id="help-pu-time" onclick="document.getElementById('p-help-time').toggle()"></paper-icon-button>
+                            </div>
+                        </div>
+                        <div horizontal layout>
+                            <div>
+                                <core-icon icon="image:timer" class="result-icon"></core-icon>
+                            </div>
+                            <div flex two class="result-disp-timer"><span id="ptimeleft">TimeLeft</span>
+                            </div>
+                            <div class="help-timeleft">
+                                <paper-icon-button icon="help" class="help" id="help-pu-timer" onclick="document.getElementById('p-help-timer').toggle()"></paper-icon-button>
+                            </div>
+                        </div>
+                    </div>
+                    <div flex one style="height:1px;background-color:#4285f4"></div>
+                    <div flex three style="background-color:#fff;color:#222;">
+                        <div style="margin: 15px 10px 5px 10px;font-weight: bold;"><span>Delivery Details</span>
+                        </div>
+                        <div horizontal layout>
+                            <div>
+                                <core-icon icon="maps:place" class="result-icon"></core-icon>
+                            </div>
+                            <div flex two class="result-disp"><span id="dloc">Location</span>
+                            </div>
+                            <div class="result-disp">
+                                <paper-icon-button icon="help" class="help" id="help-de-location" onclick="document.getElementById('d-help-location').toggle()"></paper-icon-button>
+                            </div>
+                        </div>
+                        <div horizontal layout>
+                            <div>
+                                <core-icon icon="today" class="result-icon"></core-icon>
+                            </div>
+                            <div flex two class="result-disp"><span id="ddate">Date</span>
+                            </div>
+                            <div class="result-disp">
+                                <paper-icon-button icon="help" class="help" id="help-de-date" onclick="document.getElementById('d-help-date').toggle()"></paper-icon-button>
+                            </div>
+                        </div>
+                        <div horizontal layout>
+                            <div>
+                                <core-icon icon="hardware:watch" class="result-icon"></core-icon>
+                            </div>
+                            <div flex two class="result-disp"><span id="dtime">Time</span>
+                            </div>
+                            <div class="result-disp">
+                                <paper-icon-button icon="help" class="help" id="help-de-time" onclick="document.getElementById('d-help-time').toggle()"></paper-icon-button>
+                            </div>
+                        </div>
+                        <div horizontal layout>
+                            <div>
+                                <core-icon icon="image:timer" class="result-icon"></core-icon>
+                            </div>
+                            <div flex two class="result-disp-timer"><span id="dtimeleft">TimeLeft</span>
+                            </div>
+                            <div class="help-timeleft">
+                                <paper-icon-button icon="help" class="help" id="help-de-timer" onclick="document.getElementById('d-help-timer').toggle()"></paper-icon-button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- *** HELP DIALOGS *** -->
+                    <!-- HELP LOCATION DIALOG -->
+                    <paper-action-dialog id="p-help-location" transition="core-transition-right" backdrop>
+                        <style>
+                            .help-icons {
+                                color: #4285f4;
+                            }
+                            .divCenter {
+                                text-align: center;
+                                padding-top: 10px;
+                            }
+                            .divCenter span {
+                                font-weight: bold;
+                            }
+                            .divList {
+                                padding-left: 10px;
+                                text-align: center;
+                            }
+                            .divList span {
+                                color: #4285f4;
+                            }
+                        </style>
+                        <div vertical layout style="height:auto;padding:0">
+                            <div flex one>
+                                <paper-shadow z="1">
+                                    <div horizontal layout style="background-color:#7fbb00;border-color: solid 1px #222">
+                                        <div style="padding-top:5px;">
+                                            <paper-icon-button icon="help"></paper-icon-button>
+                                        </div>
+                                        <div flex self-center style="font-weight:bold">PICK-UP LOCATION</div>
+                                    </div>
+                                </paper-shadow>
+                            </div>
+                            <div flex one style="padding:20px 0 0 10px; border-bottom: dotted 1px #7fbb00;">
+                                <core-icon icon="maps:place" class="help-icons"></core-icon>
+                                <span> &nbsp;Your Pick-up Location ( CITY, STATE )<br><br></span>
+                            </div>
+                            <div flex two class="divCenter">
+                                <span>Also Shows: </span>
+                            </div>
+                            <div flex one class="divList">
+                                <p>Current Temperature ( eg. <span>46&deg;F</span>)</p>
+                            </div>
+                            <div flex one class="divList">
+                                <p>Weather Description ( eg. LIGHT RAIN)</p>
+                            </div>
+                        </div>
+                        <paper-button affirmative>Close
+                            <core-icon icon="chevron-right"></core-icon>
+                        </paper-button>
+
+                    </paper-action-dialog>
+
+                    <paper-action-dialog id="d-help-location" transition="core-transition-right" backdrop>
+                        <style>
+                            .help-icons {
+                                color: #4285f4;
+                            }
+                            .divCenter {
+                                text-align: center;
+                                padding-top: 10px;
+                            }
+                            .divCenter span {
+                                font-weight: bold;
+                            }
+                            .divList {
+                                padding-left: 10px;
+                                text-align: center
+                            }
+                            .divList span {
+                                color: #4285f4;
+                            }
+                        </style>
+                        <div vertical layout style="height:auto;padding:0">
+                            <div flex one>
+                                <paper-shadow z="1">
+                                    <div horizontal layout style="background-color:#7fbb00;border-color: solid 1px #222">
+                                        <div style="padding-top:5px;">
+                                            <paper-icon-button icon="help"></paper-icon-button>
+                                        </div>
+                                        <div flex self-center style="font-weight:bold">DELIVERY LOCATION</div>
+                                    </div>
+                                </paper-shadow>
+                            </div>
+                            <div flex one style="padding:20px 0 0 10px; border-bottom: dotted 1px #7fbb00;">
+                                <core-icon icon="maps:place" class="help-icons"></core-icon>
+                                <span> &nbsp;Your Delivery Location ( CITY, STATE )<br><br></span>
+                            </div>
+                            <div flex two class="divCenter">
+                                <span>Also Shows: </span>
+                            </div>
+                            <div flex one class="divList">
+                                <p>Current Temperature ( eg. <span>46&deg;F</span>)</p>
+                            </div>
+                            <div flex one class="divList">
+                                <p>Weather Description ( eg. LIGHT RAIN)</p>
+                            </div>
+                        </div>
+                        <paper-button affirmative>Close
+                            <core-icon icon="chevron-right"></core-icon>
+                        </paper-button>
+
+                    </paper-action-dialog>
+                    <!-- HELP DATE DIALOG -->
+                    <paper-action-dialog id="p-help-date" transition="core-transition-right" backdrop>
+                        <style>
+                            .help-icons {
+                                color: #4285f4;
+                            }
+                            .divCenter {
+                                text-align: center;
+                                padding-top: 10px;
+                            }
+                            .divCenter span {
+                                font-weight: bold;
+                            }
+                            .divList {
+                                padding-left: 10px;
+                                padding-right: 10px;
+                                text-align: center
+                            }
+                            .divList span {
+                                color: #4285f4;
+                            }
+                        </style>
+                        <div vertical layout style="height:auto;padding:0">
+                            <div flex one>
+                                <paper-shadow z="1">
+                                    <div horizontal layout style="background-color:#7fbb00;border-color: solid 1px #222">
+                                        <div style="padding-top:5px;">
+                                            <paper-icon-button icon="help"></paper-icon-button>
+                                        </div>
+                                        <div flex self-center style="font-weight:bold">PICK-UP DATE</div>
+                                    </div>
+                                </paper-shadow>
+                            </div>
+                            <div flex one style="padding:20px 0 0 10px; border-bottom: dotted 1px #7fbb00;">
+                                <core-icon icon="today" class="help-icons"></core-icon>
+                                <span> &nbsp; Your Pick-Up Date Month/Date<br><br></span>
+                            </div>
+                            <div flex two class="divCenter">
+                                <span>Example: </span>
+                            </div>
+                            <div flex one class="divList">
+                                <p>01/06 - 01/06</p>
+                            </div>
+                            <div flex one class="divList">
+                                <p>Your Pick-up window starts on January 6th and expires the same day.</p>
+                            </div>
+                        </div>
+                        <paper-button affirmative>Close
+                            <core-icon icon="chevron-right"></core-icon>
+                        </paper-button>
+
+                    </paper-action-dialog>
+
+                    <paper-action-dialog id="d-help-date" transition="core-transition-right" backdrop>
+                        <style>
+                            .help-icons {
+                                color: #4285f4;
+                            }
+                            .divCenter {
+                                text-align: center;
+                                padding-top: 10px;
+                            }
+                            .divCenter span {
+                                font-weight: bold;
+                            }
+                            .divList {
+                                padding-left: 10px;
+                                padding-right: 10px;
+                                text-align: center
+                            }
+                            .divList span {
+                                color: #4285f4;
+                            }
+                        </style>
+                        <div vertical layout style="height:auto;padding:0">
+                            <div flex one>
+                                <paper-shadow z="1">
+                                    <div horizontal layout style="background-color:#7fbb00;border-color: solid 1px #222">
+                                        <div style="padding-top:5px;">
+                                            <paper-icon-button icon="help"></paper-icon-button>
+                                        </div>
+                                        <div flex self-center style="font-weight:bold">DELIVERY DATE</div>
+                                    </div>
+                                </paper-shadow>
+                            </div>
+                            <div flex one style="padding:20px 0 0 10px; border-bottom: dotted 1px #7fbb00;">
+                                <core-icon icon="today" class="help-icons"></core-icon>
+                                <span> &nbsp; Your Delivery Date Month/Date<br><br></span>
+                            </div>
+                            <div flex two class="divCenter">
+                                <span>Example: </span>
+                            </div>
+                            <div flex one class="divList">
+                                <p>02/15 - 02/15</p>
+                            </div>
+                            <div flex one class="divList">
+                                <p>Your Delivery window starts on February 15th and expires the same day.</p>
+                            </div>
+                        </div>
+                        <paper-button affirmative>Close
+                            <core-icon icon="chevron-right"></core-icon>
+                        </paper-button>
+
+                    </paper-action-dialog>
+
+                    <!-- HELP TIME DIALOG -->
+                    <paper-action-dialog id="p-help-time" transition="core-transition-right" backdrop>
+                        <style>
+                            .help-icons {
+                                color: #4285f4;
+                            }
+                            .divCenter {
+                                text-align: center;
+                                padding-top: 10px;
+                            }
+                            .divCenter span {
+                                font-weight: bold;
+                            }
+                            .divList {
+                                padding-left: 10px;
+                                padding-right: 10px;
+                                text-align: center
+                            }
+                            .divList span {
+                                color: #4285f4;
+                            }
+                        </style>
+                        <div vertical layout style="height:auto;padding:0">
+                            <div flex one>
+                                <paper-shadow z="1">
+                                    <div horizontal layout style="background-color:#7fbb00;border-color: solid 1px #222">
+                                        <div style="padding-top:5px;">
+                                            <paper-icon-button icon="help"></paper-icon-button>
+                                        </div>
+                                        <div flex self-center style="font-weight:bold">PICK-UP TIME WINDOW</div>
+                                    </div>
+                                </paper-shadow>
+                            </div>
+                            <div flex one style="padding:20px 0 0 10px; border-bottom: dotted 1px #7fbb00;">
+                                <core-icon icon="hardware:watch" class="help-icons"></core-icon>
+                                <span> &nbsp; Your Pick-Up Time ( hh:mm )<br><br></span>
+                            </div>
+                            <div flex two class="divCenter">
+                                <span>Example: </span>
+                            </div>
+                            <div flex one class="divList">
+                                <p>00:00 - 10:00</p>
+                            </div>
+                            <div flex one class="divList">
+                                <p>Your Pick-up window starts at Midnight and expires at 10AM.</p>
+                            </div>
+                            <div flex one class="divList">
+                                <p><span><strong>Note:</strong></span> All Times follows a 24 hour format</p>
+                            </div>
+                        </div>
+                        <paper-button affirmative>Close
+                            <core-icon icon="chevron-right"></core-icon>
+                        </paper-button>
+
+                    </paper-action-dialog>
+
+                    <paper-action-dialog id="d-help-time" transition="core-transition-right" backdrop>
+                        <style>
+                            .help-icons {
+                                color: #4285f4;
+                            }
+                            .divCenter {
+                                text-align: center;
+                                padding-top: 10px;
+                            }
+                            .divCenter span {
+                                font-weight: bold;
+                            }
+                            .divList {
+                                padding-left: 10px;
+                                padding-right: 10px;
+                                text-align: center
+                            }
+                            .divList span {
+                                color: #4285f4;
+                            }
+                        </style>
+                        <div vertical layout style="height:auto;padding:0">
+                            <div flex one>
+                                <paper-shadow z="1">
+                                    <div horizontal layout style="background-color:#7fbb00;border-color: solid 1px #222">
+                                        <div style="padding-top:5px;">
+                                            <paper-icon-button icon="help"></paper-icon-button>
+                                        </div>
+                                        <div flex self-center style="font-weight:bold">DELIVERY TIME WINDOW</div>
+                                    </div>
+                                </paper-shadow>
+                            </div>
+                            <div flex one style="padding:20px 0 0 10px; border-bottom: dotted 1px #7fbb00;">
+                                <core-icon icon="hardware:watch" class="help-icons"></core-icon>
+                                <span> &nbsp; Your Delivery Time ( hh:mm )<br><br></span>
+                            </div>
+                            <div flex two class="divCenter">
+                                <span>Example: </span>
+                            </div>
+                            <div flex one class="divList">
+                                <p>00:00 - 20:00</p>
+                            </div>
+                            <div flex one class="divList">
+                                <p>Your Delivery window starts at Midnight and expires at 8PM.</p>
+                            </div>
+                            <div flex one class="divList">
+                                <p><span><strong>Note:</strong></span> All Times follows a 24 hour format</p>
+                            </div>
+                        </div>
+                        <paper-button affirmative>Close
+                            <core-icon icon="chevron-right"></core-icon>
+                        </paper-button>
+
+                    </paper-action-dialog>
+
+                    <!-- HELP TIMER DIALOG -->
+                    <paper-action-dialog id="p-help-timer" transition="core-transition-right" backdrop>
+                        <style>
+                            .help-icons {
+                                color: #4285f4;
+                            }
+                            .divCenter {
+                                text-align: center;
+                                padding-top: 10px;
+                            }
+                            .divCenter span {
+                                font-weight: bold;
+                            }
+                            .divList {
+                                padding-left: 10px;
+                                padding-right: 10px;
+                                text-align: center
+                            }
+                            .divList span {
+                                color: #4285f4;
+                            }
+                            span#left {
+                                font-size: 15px;
+                                color: #666;
+                            }
+                        </style>
+                        <div vertical layout style="height:auto;padding:0">
+                            <div flex one>
+                                <paper-shadow z="1">
+                                    <div horizontal layout style="background-color:#7fbb00;border-color: solid 1px #222">
+                                        <div style="padding-top:5px;">
+                                            <paper-icon-button icon="help"></paper-icon-button>
+                                        </div>
+                                        <div flex self-center style="font-weight:bold">PICK-UP TIMER COUNTDOWN</div>
+                                    </div>
+                                </paper-shadow>
+                            </div>
+                            <div flex one style="padding:20px 0 0 10px; border-bottom: dotted 1px #7fbb00;">
+                                <core-icon icon="image:timer" class="help-icons"></core-icon>
+                                <span> &nbsp; Time remaining for Pick-up<br><br></span>
+                            </div>
+                            <div flex two class="divCenter">
+                                <span>Example: </span>
+                            </div>
+                            <div flex one class="divList">
+                                <p>0<span id="left">days</span> 4<span id="left">hrs</span> 26<span id="left">min</span> 32<span id="left">secs</span>
+                                </p>
+                            </div>
+                            <div flex one class="divList">
+                                <p>Countdown will continue till it reaches zero.</p>
+                            </div>
+                            <div flex one class="divList">
+                                <p><span><strong>Note:</strong></span> Countdown = PickUp MaxTime minus the Current Time</p>
+                            </div>
+                        </div>
+                        <paper-button affirmative>Close
+                            <core-icon icon="chevron-right"></core-icon>
+                        </paper-button>
+
+                    </paper-action-dialog>
+
+                    <paper-action-dialog id="d-help-timer" transition="core-transition-right" backdrop>
+                        <style>
+                            .help-icons {
+                                color: #4285f4;
+                            }
+                            .divCenter {
+                                text-align: center;
+                                padding-top: 10px;
+                            }
+                            .divCenter span {
+                                font-weight: bold;
+                            }
+                            .divList {
+                                padding-left: 10px;
+                                padding-right: 10px;
+                                text-align: center
+                            }
+                            .divList span {
+                                color: #4285f4;
+                            }
+                            span#left {
+                                font-size: 15px;
+                                color: #666;
+                            }
+                        </style>
+                        <div vertical layout style="height:auto;padding:0">
+                            <div flex one>
+                                <paper-shadow z="1">
+                                    <div horizontal layout style="background-color:#7fbb00;border-color: solid 1px #222">
+                                        <div style="padding-top:5px;">
+                                            <paper-icon-button icon="help"></paper-icon-button>
+                                        </div>
+                                        <div flex self-center style="font-weight:bold">DELIVERY TIME WINDOW</div>
+                                    </div>
+                                </paper-shadow>
+                            </div>
+                            <div flex one style="padding:20px 0 0 10px; border-bottom: dotted 1px #7fbb00;">
+                                <core-icon icon="image:timer" class="help-icons"></core-icon>
+                                <span> &nbsp; Time Remaining for Delivery<br><br></span>
+                            </div>
+                            <div flex two class="divCenter">
+                                <span>Example: </span>
+                            </div>
+                            <div flex one class="divList">
+                                <p>0<span id="left">days</span> 4<span id="left">hrs</span> 26<span id="left">min</span> 32<span id="left">secs</span>
+                                </p>
+                            </div>
+                            <div flex one class="divList">
+                                <p>Countdown will continue till it reaches zero.</p>
+                            </div>
+                            <div flex one class="divList">
+                                <p><span><strong>Note:</strong></span> Countdown = Delivery MaxTime minus the Current Time</p>
+                            </div>
+                        </div>
+                        <paper-button affirmative>Close
+                            <core-icon icon="chevron-right"></core-icon>
+                        </paper-button>
+
+                    </paper-action-dialog>
+                    <!-- ENF of HELP DIALOGS -->
+
+                    <!-- MORE ONE -->
+                </div>
+                <style>
+                    .border {
+                        background-color: #ccc;
+                        height: 1px;
+                        padding: 0px
+                    }
+                </style>
+                <div flex class="border"></div>
+                <div horizontal layout flex>
+                    <div flex three class="more">
+                        <a href="#second-stage">
+                            <paper-button class="more-button">more</paper-button>
+                        </a>
+                    </div>
+                    <div flex one>
+                        <a href="#top">
+                            <paper-button class="more-button">
+                                <core-icon icon="expand-less" id="up"></core-icon>
+                            </paper-button>
+                        </a>
+                    </div>
+                </div>
+                <!-- SECOND STAGE -->
+                <style>
+                    .second-stage {
+                        height: 700px;
+                    }
+                    .p-horiz{text-align: center}
+                    .dots{color: #4285f4;}
+                </style>
+                <div verical layout flex class="second-stage" id="second-stage">
+                    <paper-shadow z="1">
+                        <div horizontal layout style="background-color:#222;color:#4285f4;">
+                            <div style="padding-top:5px;height:30px;margin-left:5px">
+                                <core-icon icon="speaker-notes"></core-icon>
+                            </div>
+                            <div flex self-center style="font-weight:bold;height:25px">PICK-UP & TRAVEL INFO</div>
+                        </div>
+                    </paper-shadow>
+                    <div><span>FOR PICK-UP</span></div>
+                    <div class="border"></div>
+                    <div horizontal layout flex>
+                        <div flex two class="p-horiz"><span id="currentCity">YOU</span></div>
+                        <div flex one class="p-horiz"><core-icon icon="more-horiz" class="dots"></core-icon></div>
+                        <div flex one class="p-horiz"><span>DISTANCE</span></div>
+                        <div flex one class="p-horiz"><core-icon icon="more-horiz" class="dots"></core-icon></div>
+                        <div flex two class="p-horiz"><span id="ploc-second">PICK-UP</span></div>
+                    </div>
+                    <div horizontal layout>
+                        <div>
+                            <core-icon icon="restore" style="margin:0 10px 10px 5px;color:#4285f4;"></core-icon>
+                        </div>
+                        <div flex two><span id="pduration">Total Duration: 0</span>
+                        </div>
+                    </div>
+                    <div horizontal layout>
+                        <div>
+                            <core-icon icon="today" style="margin:0 10px 10px 5px;color:#4285f4;"></core-icon>
+                        </div>
+                        <div flex two><span id="ddate">Date</span>
+                        </div>
+                    </div>
+                    <div horizontal layout>
+                        <div>
+                            <core-icon icon="hardware:watch" style="margin:0 10px 10px 5px;color:#4285f4;"></core-icon>
+                        </div>
+                        <div flex two><span id="dtime">Time</span>
+                        </div>
+                    </div>
+                    <div horizontal layout>
+                        <div>
+                            <core-icon icon="image:timer" style="margin:0 10px 10px 5px;color:#4285f4;"></core-icon>
+                        </div>
+                        <div flex two><span id="dtimeleft">TimeLeft</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- END of CALC-->
+            </div>
+        </div>
+        <div vertical layout flex cross-fade tile-cascade>
+            <ul>
+                <li id="my-list">
+                    <div horizontal layout flex cross-fade tile-cascade>
+                        <polymer-ui-card swipeable="" touch-action="pan-y" class="saved-list">Save Empty</polymer-ui-card>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- TOOLS DASHBOARD -->
+        <div slide-up>
+            <div horizontal layout cross-fade tile-cascade>
+                <div flex>
+
+                    <paper-button raised class="calc-card" onclick="document.querySelector('#calc-dialog').toggle()">
+                        <paper-icon-button icon="apps"></paper-icon-button>Trucker's Calculator</paper-button>
+                </div>
+
+                <div flex>
+                    <paper-button raised class="weather-card" onclick="document.querySelector('#weather-dialog').toggle()">
+                        <paper-icon-button icon="cloud"></paper-icon-button>Weather</paper-button>
+                    <paper-action-dialog transition="core-transition-center" id="weather-dialog">
+                        <polymer-ui-weather autoupdate style="width:100%"></polymer-ui-weather>
+                    </paper-action-dialog>
+
+                </div>
+            </div>
+            <div horizontal layout cross-fade tile-cascade>
+                <div flex>
+                    <paper-button raised class="fuel-card">
+                        <paper-icon-button icon="maps:local-gas-station"></paper-icon-button>Fuel Prices</paper-button>
+                </div>
+                <div flex>
+                    <paper-button raised class="tax-card">
+                        <paper-icon-button icon="send-money"></paper-icon-button>Tax Rates</paper-button>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+    </core-animated-pages>
+
+    <script>
+        var pages = document.querySelector('core-animated-pages');
+        var tabs = document.querySelector('paper-tabs');
+        tabs.addEventListener('core-select', function () {
+            pages.selected = tabs.selected;
+        });
+    </script>
+    <style>
+        body {
+            margin: 0;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            font-family: 'Titillium Web', sans-serif;
+            font: thin;
+            background-color: #fff;
+            overflow: hidden;
+        }
+        a {
+            text-decoration: none;
+        }
+        core-toolbar {
+            background-color: #222;
+            color: #666;
+            font-family: "Dosis";
+        }
+        paper-tab {
+            color: #4285f4;
+        }
+        paper-tab::shadow #ink {
+            color: #4285f4;
+        }
+        paper-tabs {
+            background-color: #111;
+        }
+        paper-tabs::shadow #selectionBar {
+            background-color: #4285f4;
+            height: 3px;
+        }
+        paper-tab:not(.core-selected) {
+            //opacity: 0.6;
+            color: #666;
+        }
+        /* TOAST */
+        paper-toast {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            background-color: #4285f4;
+            color: #222;
+            margin: 10px;
+            margin-bottom: 5px;
+        }
+        core-animated-pages {
+            height: 100%;
+        }
+        /* CARDS */
+        #cards {
+            margin: 0 auto;
+            background: #eee;
+            overflow: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+        }
+        paper-button {
+            background-color: #fff;
+            display: block;
+            height: 80px;
+            //width: 240px;
+            margin: 5px 0px 0px 0px;
+            padding-top: 5px;
+            text-align: center;
+        }
+        paper-button.feed {
+            background-color: #ccc;
+            margin: 5px;
+            width: auto;
+        }
+        paper-button.parts {
+            background-color: #4285f4;
+            margin: 5px;
+            width: auto;
+        }
+        /* WIDGETS */
+        paper-button.calc-card {
+            height: 80px;
+            //width: 40%;
+            font-size: 15px;
+            //display: inline-table;
+            background-color: #00aeef;
+            margin-left: 5px;
+            color: #222;
+        }
+        /* CALC-DIALOG*/
+        html /deep/ paper-action-dialog::shadow #scroller {
+            height: 400px;
+            width: 300px;
+            color: #222;
+            padding: 0px;
+        }
+        #calc-dialog-header {
+            background-color: #222;
+            padding: 0;
+            width: auto;
+        }
+        paper-button.weather-card {
+            height: 80px;
+            width: auto;
+            font-size: 1em;
+            //display: inline-table;
+            background-color: #fb0a2a;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        paper-button.fuel-card {
+            height: 80px;
+            //width: 20%;
+            font-size: 1em;
+            //display: inline-table;
+            background-color: #83b81a;
+            margin-left: 5px;
+        }
+        paper-button.tax-card {
+            height: 80px;
+            //width: 40%;
+            font-size: 1em;
+            //display: inline-table;
+            background-color: pink;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        /* SAVED LIST */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 0;
+        }
+        polymer-ui-card.saved-list {
+            text-align: center;
+            margin-left: 5px;
+            margin-right: 5px;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            color: #333;
+        }
+    </style>
+    <script>
+        function findMe() {
+            var text = document.getElementById('sms').value;
+            //Get ORDER #
+            var o = text.indexOf('Order:');
+            var p = text.indexOf('|');
+            var order = text.substring(o + 6, p - 1);
+            if (text != null) {
+                document.getElementById('orderNum').innerHTML = "ORDER: " + order;
+            } else {
+                document.getElementById('orderNum').innerHTML = "ORDER: ";
+            }
+
+            // Get Pick-up CITY
+            var pu = text.indexOf('P/U:');
+            var firstComma = text.indexOf(',');
+            var pcity = text.substring(pu + 4, firstComma);
+
+            //Get Pick-up STATE
+            var pstate = text.substring(firstComma + 1, firstComma + 3);
+            var ploc = pcity + ", " + pstate;
+
+            //PICK-UP LOCATION FULL
+            if (text !== "") {
+                document.getElementById('ploc').innerHTML = ploc;
+            } else {
+                document.getElementById('ploc').innerHTML = "Location";
+            }
+
+            //Get Pick-up MONTH FROM
+            var pstart = text.indexOf(pstate);
+            var pdash = text.indexOf('-');
+            var pmonthf = text.substring(pstart + 3, pdash - 9);
+
+            //Get Pick-up DATE FROM
+            var pdatef = text.substring(pstart + 6, pdash - 6);
+            var pdatea = pmonthf + "/" + pdatef;
+
+
+            //Get Pick-up TIME FROM
+            var phourf = text.substring(pdash - 3, pdash - 5);
+            var pminf = text.substring(pdash, pdash - 2);
+            var ptimea = phourf + ":" + pminf;
+
+            //Get Pick-up MONTH & DATE TILL
+            var pmontht = text.substring(pdash + 1, pdash + 3);
+            var pdatet = text.substring(pdash + 4, pdash + 6);
+            var pdateb = pmontht + "/" + pdatet;
+
+            // PICK-UP DATE FULL
+            var pdate = pdatea + " - " + pdateb;
+            if (text !== "") {
+                document.getElementById('pdate').innerHTML = pdate;
+            } else {
+                document.getElementById('pdate').innerHTML = "Pick-up Date";
+            }
+
+            //Get Pick-up TIME TILL
+            var phourt = text.substring(pdash + 7, pdash + 9);
+            var pmint = text.substring(pdash + 10, pdash + 12);
+            var ptimeb = phourt + ":" + pmint;
+
+            //PICK-UP TIME FULL
+            var ptime = ptimea + " - " + ptimeb;
+            if (text !== "") {
+                document.getElementById('ptime').innerHTML = ptime;
+            } else {
+                document.getElementById('ptime').innerHTML = "Pick-up Time Window";
+            }
+
+            //Get Delivery CITY & STATE
+            var del = text.indexOf('DEL:');
+            var secondComma = text.lastIndexOf(',');
+            var dcity = text.substring(del + 4, secondComma);
+
+            var dstate = text.substring(secondComma + 1, secondComma + 3);
+
+            //DELIVERY LOCATION FULL
+            var dloc = dcity + ", " + dstate;
+            if (text !== "") {
+                document.getElementById('dloc').innerHTML = dloc;
+            } else {
+                document.getElementById('dloc').innerHTML = "Delivery Location";
+            }
+
+            // Get Delivery MONTH & DATE FROM
+            var secondDash = text.lastIndexOf('-');
+            var dstart = text.indexOf(dstate);
+            var dmonthf = text.substring(dstart + 3, secondDash - 9);
+
+            var ddatef = text.substring(dstart + 6, secondDash - 6);
+            var ddatea = dmonthf + "/" + ddatef;
+
+            // Get Delivery TIME FROM
+            var dhourf = text.substring(secondDash - 3, secondDash - 5);
+            var dminf = text.substring(secondDash, secondDash - 2);
+            var dtimea = dhourf + ":" + dminf;
+
+            //Get Delivery MONTH & DATE TILL
+            var dmontht = text.substring(secondDash + 1, secondDash + 3);
+            var ddatet = text.substring(secondDash + 4, secondDash + 6);
+            var ddateb = dmontht + "/" + ddatet;
+
+            // DELIVERY MONTH & DATE FULL
+            var ddate = ddatea + " - " + ddateb;
+            if (text !== "") {
+                document.getElementById('ddate').innerHTML = ddate;
+            } else {
+                document.getElementById('ddate').innerHTML = "Delivery Date";
+            }
+
+            //Get Delivery TIME TILL
+            var dhourt = text.substring(secondDash + 7, secondDash + 9);
+            var dmint = text.substring(secondDash + 10, secondDash + 12);
+            var dtimeb = dhourt + ":" + dmint;
+
+            //DELIVERY TIME FULL
+            var dtime = dtimea + " - " + dtimeb;
+            if (text !== "") {
+                document.getElementById('dtime').innerHTML = dtime;
+            } else {
+                document.getElementById('dtime').innerHTML = "Delivery Time Window";
+            }
+
+
+            var runtimer = setInterval(function () {
+                runTimerClock()
+            }, 1000);
+
+            function runTimerClock() {
+                var now = new Date();
+                //TIME
+                var secs = now.getSeconds();
+                var mins = now.getMinutes();
+                var hour = now.getHours();
+                //DAYS
+                var month = now.getMonth();
+                var date = now.getDate();
+                var daysinmnth = 32 - new Date(now.getYear(), now.getMonth(), 32).getDate();
+
+                var entryMonth = pmontht;
+                var entryDate = pdatet;
+                var entryHour = phourt;
+                var entryMins = pmint;
+                var entrySecs = 60;
+
+                var dispMonth = entryMonth - (month + 1);
+                var dispDate = entryDate - date;
+                var dispHour = entryHour - hour;
+                var dispMins = entryMins - mins;
+                var dispSecs = entrySecs - secs;
+
+                //PICK-UP TIME LEFT
+                if (dispSecs < 0) {
+                    dispSecs = (dispSecs + 60) % 60;
+                    dispMins--;
+                }
+                if (dispMins < 0) {
+                    dispMins = (dispMins + 60) % 60;
+                    dispHour--;
+                }
+                if (dispHour < 0) {
+                    dispHour = (dispHour + 24) % 24;
+                    dispDate--;
+                }
+                if (dispDate < 0) {
+                    dispDate = (dispDate + daysinmnth) % daysinmnth;
+                    dispMonth--;
+                }
+
+                var ptimer = dispDate + "<span>days</span>  " + dispHour + "<span>hrs</span> " + dispMins + "<span>min</span> " + dispSecs + "<span>secs</span> " + " &nbsp;&nbsp; <core-icon icon='hardware:keyboard-control' style='color:#4285f4;'></core-icon> &nbsp;&nbsp;" + ((dispDate * 24) + dispHour) + "<span>hrs </span>" + dispMins + "<span>min</span>";
+
+                if (dispMonth < 0) {
+                    document.getElementById('ptimeleft').innerHTML = "Pick-Up Date has passed the current date.";
+                } else if (dispDate < 0) {
+                    document.getElementById('ptimeleft').innerHTML = "Pick-Up Date has passed the current date.";
+                } else if (dispMonth == 0 && dispDate == 0 && dispHour < 0) {
+                    document.getElementById('ptimeleft').innerHTML = "Pick-Up time has passed the current time.";
+                } else {
+                    document.getElementById('ptimeleft').innerHTML = ptimer;
+                }
+
+                //DELIVERY
+
+                var dentryMonth = dmontht;
+                var dentryDate = ddatet;
+                var dentryHour = dhourt;
+                var dentryMin = dmint;
+                var dentrySecs = 60;
+
+
+
+                var dispMonthd = dentryMonth - (month + 1);
+                var dispDated = dentryDate - date;
+                var dispHourd = dentryHour - hour;
+                var dispMinsd = dentryMin - mins;
+                var dispSecsd = dentrySecs - secs;
+
+
+
+                //DELIVERY TIME LEFT
+                if (dispSecsd < 0) {
+                    dispSecsd = (dispSecsd + 60) % 60;
+                    dispMinsd--;
+                }
+                if (dispMinsd < 0) {
+                    dispMinsd = (dispMinsd + 60) % 60;
+                    dispHourd--;
+                }
+                if (dispHourd < 0) {
+                    dispHourd = (dispHourd + 24) % 24;
+                    dispDated--;
+                }
+                if (dispDated < 0) {
+                    dispDated = (dispDated + daysinmnth) % daysinmnth;
+                    dispMonthd--;
+                }
+
+
+
+                var dtimer = dispDated + "<span>days</span>  " + dispHourd + "<span>hrs</span> " + dispMinsd + "<span>min</span> " + dispSecsd + "<span>secs</span> " + " &nbsp;&nbsp; <core-icon icon='hardware:keyboard-control' style='color:#4285f4;'></core-icon> &nbsp;&nbsp;" + ((dispDated * 24) + dispHourd) + "<span>hrs </span>" + dispMinsd + "<span>min</span>";
+
+                if (dispMonthd < 0) {
+                    document.getElementById('dtimeleft').innerHTML = "Delivery Date has passed the current date.";
+                } else if (dispDated < 0) {
+                    document.getElementById('dtimeleft').innerHTML = "Delivery Date has passed the current date.";
+                } else if (dispHourd < 0) {
+                    document.getElementById('dtimeleft').innerHTML = "Delivery time has passed the current time.";
+                } else {
+                    document.getElementById('dtimeleft').innerHTML = dtimer;
+                }
+
+                runTimer();
+
+            }
+            //DURATION
+
+            var pDurHour = phourt - phourf;
+            var pDurMins = pmint - pminf;
+
+            document.getElementById('pduration').innerHTML = pDurHour + " hours " + pDurMins + " minutes"
+
+
+
+            //};
+
+            function getWeather(callback) {
+                var cityp = ploc;
+                var weatherp = 'http://openweathermap.org/data/2.5/weather?q=' + cityp;
+                $.ajax({
+                    dataType: "jsonp",
+                    url: weatherp,
+                    success: callback
+                });
+            }
+
+            // get data:
+            getWeather(function (data) {
+                var condResult = data.weather[0].description;
+                var weatherResult = condResult.toUpperCase();
+                var tempResult = data.main.temp;
+                var toFah = Math.round(((tempResult - 273.15) * 1.8) + 32) + "&deg;F";
+
+                document.getElementById('ploc').innerHTML = ploc + " &nbsp; - &nbsp; <span>" + toFah + " &nbsp;&nbsp;</span>" + " " + weatherResult;
+                document.getElementById('ploc-second').innerHTML = ploc;
+            });
+
+            function getWeatherTwo(callback) {
+                var cityd = dloc;
+                var weatherp = 'http://openweathermap.org/data/2.5/weather?q=' + cityd;
+                $.ajax({
+                    dataType: "jsonp",
+                    url: weatherp,
+                    success: callback
+                });
+            }
+
+            // get data:
+            getWeatherTwo(function (data) {
+                var condResult = data.weather[0].description;
+                var weatherResult = condResult.toUpperCase();
+                var tempResult = data.main.temp;
+                var toFah = Math.round(((tempResult - 273.15) * 1.8) + 32) + "&deg;F";
+
+                document.getElementById('dloc').innerHTML = dloc + " &nbsp; - &nbsp; <span>" + toFah + " &nbsp;&nbsp;</span>" + " " + weatherResult;
+                //document.getElementById('dloc').innerHTML = dloc + " &nbsp; - &nbsp; <span>" + toFah + "</span>";
+            });
+
+
+
+        };
+
+        function clearMe() {
+            document.getElementById('sms').value = "";
+        };
+
+        $(function () {
+            $('a[href*=#]:not([href=#])').click(function () {
+                if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+                    var target = $(this.hash);
+                    target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                    if (target.length) {
+                        $('html,body').animate({
+                            scrollTop: target.offset().top
+                        }, 400);
+                        return false;
+                    }
+                }
+            });
+        });
+
+var geocoder;
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+} 
+//Get the latitude and the longitude;
+function successFunction(position) {
+    var lat = position.coords.latitude;
+    var lng = position.coords.longitude;
+    codeLatLng(lat, lng);
+}
+
+function errorFunction(){
+    document.getElementById('currentCity').innerHTML = "Geocoder failed";
+}
+
+  function initialize() {
+    geocoder = new google.maps.Geocoder();
+
+
+
+  }
+
+  function codeLatLng(lat, lng) {
+
+    var latlng = new google.maps.LatLng(lat, lng);
+    geocoder.geocode({'latLng': latlng}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+      console.log(results);
+        if (results[1]) {
+         //formatted address
+          var fa = results[0].formatted_address;
+        //find country name
+             for (var i=0; i<results[0].address_components.length; i++) {
+            for (var b=0;b<results[0].address_components[i].types.length;b++) {
+
+            //there are different types that might hold a city admin_area_lvl_1 usually does in come cases looking for sublocality type will be more appropriate
+                if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
+                    //this is the object you are looking for
+                    state = results[0].address_components[4];
+                    city  = results[0].address_components[2];
+                    break;
+                }
+            }
+        }
+        //city data
+        var stateName = state.short_name;
+        var cityName = city.short_name;
+        var cityUpper = cityName.toUpperCase();
+          var cityState = cityUpper + ", " +stateName;
+        document.getElementById('currentCity').innerHTML = cityState;
+
+        } else {
+          document.getElementById('currentCity').innerHTML = "No results found";
+        }
+      } else {
+        document.getElementById('currentCity').innerHTML = "Geocoder failed due to: " + status;
+      }
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+    
+</body>
+
+</html>
