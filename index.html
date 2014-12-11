@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>trucker.io</title>
+    <title>The Trucker App</title>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
     <meta name="theme-color" content="#222">
     <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
@@ -65,7 +65,7 @@
 
 </head>
 
-<body unresolved vertical layout onLoad="initialize()">
+<body unresolved vertical layout onload="initialize();">
 
     <paper-shadow z="1">
         <core-toolbar flex>
@@ -201,7 +201,7 @@
                 <div flex one id="tripPaste" style="margin-bottom:20px; text-align:center;"><span>Paste SMS <core-icon icon="speaker-notes"></core-icon> below</span>
                 </div>
                 <div flex three>
-                    <textarea id="sms" cols="25" rows="8" onchange="findMe()"></textarea>
+                    <textarea id="sms" cols="25" rows="8" onchange="getInfo()"></textarea>
                 </div>
                 <div horizontal layout flex two style="">
                     <div flex one></div>
@@ -818,6 +818,7 @@
                         height: 1px;
                         padding: 0px
                     }
+                    .more-button{color: #444;text-decoration: none}
                 </style>
                 <div flex class="border"></div>
                 <div horizontal layout flex>
@@ -856,7 +857,7 @@
                     <div horizontal layout flex>
                         <div flex two class="p-horiz"><span id="currentCity">YOU</span></div>
                         <div flex one class="p-horiz"><core-icon icon="more-horiz" class="dots"></core-icon></div>
-                        <div flex one class="p-horiz"><span>DISTANCE</span></div>
+                        <div flex two class="p-horiz"><span>DISTANCE</span></div>
                         <div flex one class="p-horiz"><core-icon icon="more-horiz" class="dots"></core-icon></div>
                         <div flex two class="p-horiz"><span id="ploc-second">PICK-UP</span></div>
                     </div>
@@ -864,28 +865,28 @@
                         <div>
                             <core-icon icon="restore" style="margin:0 10px 10px 5px;color:#4285f4;"></core-icon>
                         </div>
-                        <div flex two><span id="pduration">Total Duration: 0</span>
+                        <div flex two><span id=""></span>
                         </div>
                     </div>
                     <div horizontal layout>
                         <div>
                             <core-icon icon="today" style="margin:0 10px 10px 5px;color:#4285f4;"></core-icon>
                         </div>
-                        <div flex two><span id="ddate">Date</span>
+                        <div flex two><span id=""></span>
                         </div>
                     </div>
                     <div horizontal layout>
                         <div>
                             <core-icon icon="hardware:watch" style="margin:0 10px 10px 5px;color:#4285f4;"></core-icon>
                         </div>
-                        <div flex two><span id="dtime">Time</span>
+                        <div flex two><span id=""></span>
                         </div>
                     </div>
                     <div horizontal layout>
                         <div>
                             <core-icon icon="image:timer" style="margin:0 10px 10px 5px;color:#4285f4;"></core-icon>
                         </div>
-                        <div flex two><span id="dtimeleft">TimeLeft</span>
+                        <div flex two><span id=""></span>
                         </div>
                     </div>
                 </div>
@@ -1087,6 +1088,11 @@
         }
     </style>
     <script>
+        
+        function getInfo(){
+            findMe();
+            initialize();
+        }
         function findMe() {
             var text = document.getElementById('sms').value;
             //Get ORDER #
@@ -1326,7 +1332,7 @@
             var pDurHour = phourt - phourf;
             var pDurMins = pmint - pminf;
 
-            document.getElementById('pduration').innerHTML = pDurHour + " hours " + pDurMins + " minutes"
+            //document.getElementById('pduration').innerHTML = pDurHour + " hours " + pDurMins + " minutes"
 
 
 
