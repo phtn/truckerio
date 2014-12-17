@@ -3,7 +3,7 @@
         function getInfo(){
             findMe();
             initialize();
-            
+            getDistanceP();
         }
         function findMe() {
             var text = document.getElementById('sms').value;
@@ -270,7 +270,7 @@
                 document.getElementById('ploc').innerHTML = ploc;
                 document.getElementById('ploc-weather-temp').innerHTML = toFah;
                 document.getElementById('ploc-weather-desc').innerHTML = weatherResult;
-                document.getElementById('ploc-second').innerHTML = ploc;
+                document.getElementById('ploc-second').innerHTML = ploc + " &nbsp;&nbsp;<span>( Pick-up Location )</span>";
             });
 
             function getWeatherTwo(callback) {
@@ -293,7 +293,7 @@
                 document.getElementById('dloc').innerHTML = dloc;
                 document.getElementById('dloc-weather-temp').innerHTML = toFah;
                 document.getElementById('dloc-weather-desc').innerHTML = weatherResult;
-                //document.getElementById('dloc-second').innerHTML = dloc;
+                document.getElementById('dloc-second').innerHTML = dloc;
             });
 
 
@@ -369,7 +369,7 @@ function errorFunction(){
         var cityName = city.short_name;
         var cityUpper = cityName.toUpperCase();
         var cityState = cityUpper + ", " +stateName;
-        document.getElementById('currentCity').innerHTML = cityState;
+        document.getElementById('currentCity').innerHTML = cityState + " &nbsp;&nbsp;<span>( Your Current Location )</span>";
 
         } else {
           document.getElementById('currentCity').innerHTML = "No results found";
@@ -381,22 +381,32 @@ function errorFunction(){
   }
 
 // GET DISTANCE
-$( window ).scroll(function getDistanceP(){
+function getDistanceP(){
     
-    var yCity = document.getElementById('currentCity');
-    var yourCity = yCity.innerHTML;
+    var yCity = document.getElementById('currentCity'),
+        yourCity = yCity.innerHTML;
 
-    var pCity = document.getElementById('ploc-second');
-    var plocCity = pCity.innerHTML;
+    var pCity = document.getElementById('ploc'),
+        plocCity = pCity.innerHTML;
     
-    var origin = yourCity,
-        destination = plocCity,
+    var dCity = document.getElementById('dloc'),
+        dlocCity = dCity.innerHTML;
+    
+    document.getElementById('ploc-second-delivery').innerHTML = plocCity + " &nbsp;&nbsp;<span>( Pick-up Location )</span>";
+    
+    document.getElementById('dloc-second').innerHTML = dlocCity + " &nbsp;&nbsp;<span>( Delivery Location )</span>";
+    var origin1 = yourCity,
+        origin2 = plocCity,
+        destination1 = plocCity,
+        destination2 = dlocCity,
         service = new google.maps.DistanceMatrixService();
+    
+    
 
     service.getDistanceMatrix(
         {
-            origins: [origin],
-            destinations: [destination],
+            origins: [origin1, origin2],
+            destinations: [destination1, destination2],
             travelMode: google.maps.TravelMode.DRIVING,
             unitSystem: google.maps.UnitSystem.IMPERIAL,
             avoidHighways: false,
@@ -408,14 +418,26 @@ $( window ).scroll(function getDistanceP(){
     function callback(response, status) {
 
         if(status=="OK") {
-            //var distanceValue = response.rows[0].elements[0].distance.value;
+            var distanceValue = response.rows[0].elements[0].distance.value;
             var distanceText = response.rows[0].elements[0].distance.text;
             document.getElementById('p-distance').innerHTML = distanceText;
+            
+            var durationValue = response.rows[0].elements[0].duration.value;
+            var durationText = response.rows[0].elements[0].duration.text;
+            document.getElementById('p-duration').innerHTML = durationText;
+            
+            var ddistanceValue = response.rows[1].elements[1].distance.value;
+            var ddistanceText = response.rows[1].elements[1].distance.text;
+            document.getElementById('d-distance').innerHTML = ddistanceText;
+            
+            var ddurationValue = response.rows[1].elements[1].duration.value;
+            var ddurationText = response.rows[1].elements[1].duration.text;
+            document.getElementById('d-duration').innerHTML = ddurationText;
         } else {
             alert("Error: " + status);
         }
     }
-});
+}
 
 
 

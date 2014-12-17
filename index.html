@@ -868,7 +868,7 @@
                             <div flex self-center style="font-weight:bold;height:25px;margin-left:5px;">TRIP INFO</div>
                         </div>
                     </paper-shadow>
-                    <div><span>FOR PICK-UP</span></div>
+                    <div class="subheader-second"><span>FOR PICK-UP</span></div>
                     <div class="border"></div>
                     <style>.mapic{ margin-left: 5px} .cploc{margin-right: 5px;}
                         #my-location {color: #4285f4; font-size: 10px;}
@@ -878,11 +878,13 @@
                         .padding-second {background-color: none;}
                         .cn-second {vertical-align: text-bottom;background-color: #fff;padding-top: 0px}
                         .in-between {height: 5px;background-color: none}
-                        .display-value-full {border: solid 1px #333; border-radius: 5px 5px 0 0;}
-                        .display-value {background-color: #4285f4; border-bottom: solid 1px #333; width: 100%; text-align: center; color: #222;font-size: 20px;}
+                        .display-value { border-bottom: solid 1px #666; width: 100%; text-align: center; color: #4285f4;font-size: 20px;font-weight: bold}
                         .display-label {color: #999; width: 100%; text-align: center;}
+                        .container-second{margin-top: 5px;}
+                        #ploc-second span, #currentCity span, #ploc-second-delivery span, #dloc-second span {color: #999;}
+                        .subheader-second {margin: 5px 0 0 5px}
                     </style>
-                    <div horizontal layout flex>
+                    <div horizontal layout flex class="container-second">
                         <div vertical layout class="mapic" flex one>
                             <div flex one><core-icon icon="maps:my-location" id="my-location"></core-icon></div>
                             <div flex one><core-icon icon="more-vert" id="dots-second"></core-icon></div>
@@ -905,7 +907,43 @@
                         </div>
                         <div flex one class="padding-second"></div>
                         <div vertical layout flex two class="display-value-full">
-                            <div flex one self-center class="display-value">Hours</div>
+                            <div flex one self-center class="display-value"><span id="p-duration">Hours</span></div>
+                            <div flex one self-center class="display-label">Duration</div>
+                        </div>
+                        <div flex one class="padding-second"></div>
+                    </div>
+            
+                <!-- DELIVERY -->
+                
+                    <div class="subheader-second"><span>FOR DELIVERY</span></div>
+                    <div class="border"></div>
+                    <style>
+                        #place-icon {color: #34ad00;}
+                    </style>
+                    <div horizontal layout flex class="container-second">
+                        <div vertical layout class="mapic" flex one>
+                            <div flex one><core-icon icon="maps:pin-drop" id="pin-drop"></core-icon></div>
+                            <div flex one><core-icon icon="more-vert" id="dots-second"></core-icon></div>
+                            <div flex one><core-icon icon="maps:place" id="place-icon"></core-icon></div>
+                        </div>
+                        <div vertical layout class="cploc" flex nine >
+                            <div flex class="cn-second"><span id="ploc-second-delivery">PICK-UP</span></div>
+                            <div flex class="hori-border-second"><hr id="hr-second"></hr></div>
+                            <div flex class="cn-second"><span id="dloc-second">DELIVERY</span></div>
+                        </div>
+                    </div>
+                <div flex class="in-between">
+                    
+                </div>
+                    <div horizontal layout flex>
+                        <div flex one class="padding-second"></div>
+                        <div vertical layout flex two self-center class="display-value-full">
+                            <div flex one self-center class="display-value"><span id="d-distance">DISTANCE</span></div>
+                            <div flex one self-center class="display-label">Distance</div>
+                        </div>
+                        <div flex one class="padding-second"></div>
+                        <div vertical layout flex two class="display-value-full">
+                            <div flex one self-center class="display-value"><span id="d-duration">Hours</span></div>
                             <div flex one self-center class="display-label">Duration</div>
                         </div>
                         <div flex one class="padding-second"></div>
