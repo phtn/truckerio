@@ -5,6 +5,8 @@
     <title>The Trucker App</title>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
     <meta name="theme-color" content="#222">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
     <script src="http://www.polymer-project.org/components/webcomponentsjs/webcomponents.js"></script>
    
@@ -44,21 +46,17 @@
     <link rel="import" href="http://www.polymer-project.org/components/core-transition/core-transition.html">
     <link rel="import" href="http://www.polymer-project.org/components/core-transition/core-transition-css.html">
     <link rel="import" href="http://www.polymer-project.org/components/paper-shadow/paper-shadow.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-toggle-button/paper-toggle-button.html">
     <link rel="import" href="http://www.polymer-project.org/components/paper-icon-button/paper-icon-button.html">
     <link rel="import" href="http://www.polymer-project.org/components/polymer-ui-elements/polymer-ui-elements.html">
     <link rel="import" href="http://www.polymer-project.org/components/polymer-ui-card/polymer-ui-card.html">
     <link rel="import" href="http://www.polymer-project.org/components/polymer-ui-weather/polymer-ui-weather.html">
     <link rel="import" href="http://www.polymer-project.org/components/paper-toast/paper-toast.html">
-    <link rel="import" href="/components/bower_components/core-icons/core-icons.html">
 
     <!-- FONTS -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:300|Dosis:500' rel='stylesheet' type='text/css'>
-
-    <!-- SAVED ELEMENT  
-      <link rel="import" href="elements/saved.html"> 
     
-  
-  <link rel="stylesheet" href="style.css"> -->
+    
     <script type ="text/javascript"
             src  ="http://maps.googleapis.com/maps/api/js?&key=AIzaSyDo3u5_I-cf8fnpc37-xi9Ou1JXbrhYxiU&sensor=true"></script>
     <script src="js/nome-0.1.9.js" type="text/javascript"></script>
@@ -117,7 +115,7 @@
     </style>
     <!-- TOAST -->
     <paper-toast id="live-toast" text="News & Updates" duration="5500"></paper-toast>
-    <paper-toast id="widgets-toast" text="Trip Calculator" duration="5500"></paper-toast>
+    <paper-toast id="widgets-toast" text="Swift Load Preview" duration="5500"></paper-toast>
     <paper-toast id="saved-toast" text="Saved List" duration="5500"></paper-toast>
     <paper-toast id="reports-toast" text="Tools Dashboard" duration="5500"></paper-toast>
 
@@ -836,11 +834,13 @@
                     }
                     .more-button{color: #444;text-decoration: none}
                 </style>
-                <div flex class="border"></div>
-                <div horizontal layout flex>
+                <paper-shadow z="1">
+                    <div flex class="border"></div>
+                </paper-shadow>
+                <div horizontal layout flex style="margin-top: -5px;">
                     <div flex three class="more">
                         <a href="#second-stage">
-                            <paper-button class="more-button">more</paper-button>
+                            <paper-button class="more-button" onClick="getDuration();">more</paper-button>
                         </a>
                     </div>
                     <div flex one>
@@ -854,7 +854,9 @@
                 <!-- SECOND STAGE -->
                 <style>
                     .second-stage {
-                        height: 700px;
+                        height: 470px;
+                        margin-bottom: 0px;
+                        padding-bottom: 0px;
                     }
                     .p-horiz{text-align: center}
                     .dots{color: #4285f4;}
@@ -868,89 +870,211 @@
                             <div flex self-center style="font-weight:bold;height:25px;margin-left:5px;">TRIP INFO</div>
                         </div>
                     </paper-shadow>
-                    <div class="subheader-second"><span>FOR PICK-UP</span></div>
+                    <paper-shadow z="1">
+                        <div horizontal layout flex class="subheader-second"><span>&nbsp;&nbsp;FOR PICK-UP</span></div>
+                    </paper-shadow>
                     <div class="border"></div>
                     <style>.mapic{ margin-left: 5px} .cploc{margin-right: 5px;}
                         #my-location {color: #4285f4; font-size: 10px;}
                         #pin-drop {color: #fb0a2a;}
                         #dots-second {color: #999;}
                         .hori-border-second {border: none; padding-top: 7px}
-                        .padding-second {background-color: none;}
+                        .padding-second {background-color: none;font-size: 12px; color: #666;margin-left: 15px;padding-right: 5px; border-right: solid 1px #ccc;}
                         .cn-second {vertical-align: text-bottom;background-color: #fff;padding-top: 0px}
                         .in-between {height: 5px;background-color: none}
-                        .display-value { border-bottom: solid 1px #666; width: 100%; text-align: center; color: #4285f4;font-size: 20px;font-weight: bold}
+                        .display-value {width: 100%;margin-left: 10px; color: #4285f4;font-size: 20px;font-weight: bold}
                         .display-label {color: #999; width: 100%; text-align: center;}
                         .container-second{margin-top: 5px;}
-                        #ploc-second span, #currentCity span, #ploc-second-delivery span, #dloc-second span {color: #999;}
-                        .subheader-second {margin: 5px 0 0 5px}
+                        #ploc-second span, #currentCity span, #ploc-second-delivery span, #dloc-second span {color: #999; font-size: 12px}
+                        .subheader-second {margin: 5px 0 0 0px; background-color: #4285f4;}
+                        .subtitle-second {color: #666; font-size: 11px}
+                        .container-value-second {background-color: #fff}
+                        .chevron {margin-top: -3px;}
+                        .top-hori-second {margin-top: 2px}
+                        #p-duration span, #p-distance span, #d-duration span, #d-distance span {font-size: 15px; color: #666;}
                     </style>
-                    <div horizontal layout flex class="container-second">
+                    <paper-shadow z="1">
+                    <div horizontal layout flex two class="container-second">
                         <div vertical layout class="mapic" flex one>
                             <div flex one><core-icon icon="maps:my-location" id="my-location"></core-icon></div>
                             <div flex one><core-icon icon="more-vert" id="dots-second"></core-icon></div>
                             <div flex one><core-icon icon="maps:pin-drop" id="pin-drop"></core-icon></div>
                         </div>
                         <div vertical layout class="cploc" flex nine >
-                            <div flex class="cn-second"><span id="currentCity">YOU</span></div>
+                            <div horizontal layout flex class="top-hori-second">
+                                <div flex two class="cn-second"><span id="currentCity">CURRENT LOCATION</span></div>
+                                <div flex one class="subtitle-second"><span class="subtitle-second"><core-icon icon="chevron-left" class="chevron"></core-icon>&nbsp;Current Location</span></div>
+                            </div>
                             <div flex class="hori-border-second"><hr id="hr-second"></hr></div>
-                            <div flex class="cn-second"><span id="ploc-second">PICK-UP</span></div>
+                            <div horizontal layout flex>
+                                <div flex two class="cn-second"><span id="ploc-second">PICK-UP LOCATION</span></div>
+                                <div flex one class="subtitle-second"><span class="subtitle-second"><core-icon icon="chevron-left" class="chevron"></core-icon>&nbsp;Pick-Up Location</span></div>
+                            </div>
                         </div>
                     </div>
+                    </paper-shadow>
                 <div flex class="in-between">
                     
                 </div>
-                    <div horizontal layout flex>
-                        <div flex one class="padding-second"></div>
-                        <div vertical layout flex two self-center class="display-value-full">
+                    <div horizontal layout flex two class="container-value-second">
+                        <div flex two class="padding-second" self-center>DISTANCE</div>
+                        <div vertical layout flex three self-center class="display-value-full">
                             <div flex one self-center class="display-value"><span id="p-distance">DISTANCE</span></div>
-                            <div flex one self-center class="display-label">Distance</div>
+                            <!-- <div flex one self-center class="display-label">Distance</div> -->
                         </div>
-                        <div flex one class="padding-second"></div>
-                        <div vertical layout flex two class="display-value-full">
+                        <div flex two class="padding-second" self-center>DURATION</div>
+                        <div vertical layout flex four class="display-value-full">
                             <div flex one self-center class="display-value"><span id="p-duration">Hours</span></div>
-                            <div flex one self-center class="display-label">Duration</div>
+                            <!-- <div flex one self-center class="display-label">Duration</div> -->
                         </div>
-                        <div flex one class="padding-second"></div>
+                        <div flex></div>
                     </div>
             
                 <!-- DELIVERY -->
-                
-                    <div class="subheader-second"><span>FOR DELIVERY</span></div>
+                    <paper-shadow z="1">
+                        <div class="subheader-second"><span>&nbsp;&nbsp;FOR DELIVERY</span></div>
+                    </paper-shadow>
                     <div class="border"></div>
                     <style>
                         #place-icon {color: #34ad00;}
+                        
                     </style>
-                    <div horizontal layout flex class="container-second">
-                        <div vertical layout class="mapic" flex one>
-                            <div flex one><core-icon icon="maps:pin-drop" id="pin-drop"></core-icon></div>
-                            <div flex one><core-icon icon="more-vert" id="dots-second"></core-icon></div>
-                            <div flex one><core-icon icon="maps:place" id="place-icon"></core-icon></div>
+                <paper-shadow z="1">
+                <div horizontal layout flex two class="container-second">
+                    <div vertical layout class="mapic" flex one>
+                        <div flex one><core-icon icon="maps:pin-drop" id="pin-drop"></core-icon></div>
+                        <div flex one><core-icon icon="more-vert" id="dots-second"></core-icon></div>
+                        <div flex one><core-icon icon="maps:place" id="place-icon"></core-icon></div>
+                    </div>
+                    <div vertical layout class="cploc" flex nine >
+                        <div horizontal layout flex class="top-hori-second">
+                            <div flex two class="cn-second"><span id="ploc-second-delivery">PICK-UP LOCATION</span></div>
+                            <div flex one class="subtitle-second"><span class="subtitle-second"><core-icon icon="chevron-left" class="chevron"></core-icon>&nbsp;Pick-Up Location</span></div>
                         </div>
-                        <div vertical layout class="cploc" flex nine >
-                            <div flex class="cn-second"><span id="ploc-second-delivery">PICK-UP</span></div>
-                            <div flex class="hori-border-second"><hr id="hr-second"></hr></div>
-                            <div flex class="cn-second"><span id="dloc-second">DELIVERY</span></div>
+                        <div flex class="hori-border-second"><hr id="hr-second"></hr></div>
+                        <div horizontal layout flex>
+                            <div flex two class="cn-second"><span id="dloc-second">DELIVERY LOCATION</span></div>
+                            <div flex one class="subtitle-second"><span class="subtitle-second"><core-icon icon="chevron-left" class="chevron"></core-icon>&nbsp;Delivery Location</span></div>
                         </div>
                     </div>
+                </div>
+                </paper-shadow>
                 <div flex class="in-between">
                     
                 </div>
-                    <div horizontal layout flex>
-                        <div flex one class="padding-second"></div>
-                        <div vertical layout flex two self-center class="display-value-full">
+                    <div horizontal layout flex two class="container-value-second">
+                        <div flex two class="padding-second" self-center>DISTANCE</div>
+                        <div vertical layout flex three self-center class="display-value-full">
                             <div flex one self-center class="display-value"><span id="d-distance">DISTANCE</span></div>
-                            <div flex one self-center class="display-label">Distance</div>
+                            <!-- <div flex one self-center class="display-label">Distance</div> -->
                         </div>
-                        <div flex one class="padding-second"></div>
-                        <div vertical layout flex two class="display-value-full">
+                        <div flex two class="padding-second" self-center>DURATION</div>
+                        <div vertical layout flex four class="display-value-full">
                             <div flex one self-center class="display-value"><span id="d-duration">Hours</span></div>
-                            <div flex one self-center class="display-label">Duration</div>
+                            <!-- <div flex one self-center class="display-label">Duration</div> -->
                         </div>
-                        <div flex one class="padding-second"></div>
+                        <div flex></div>
+                    </div>
+            
+            <!-- TOGGLE SECTION 0f9d58 -->
+            <style>
+                #team {color: #4285f4; font-weight: bolder;}
+                #solo {color: #0f9d58; font-weight: bolder;}
+                paper-toggle-button::shadow paper-radio-button::shadow #offRadio{  border-color: #4285f4;}
+                paper-toggle-button::shadow #toggleBar {  background-color: #4285f4;}
+                paper-toggle-button::shadow #toggleBar[checked] {  background-color: #0f9d58;}
+                .sub-toggle {font-size: 12px; color: #999}
+                .toggle-section {height: 60px; background-color: #222;margin-top: 1px}
+                
+            </style>
+            <paper-shadow z="1">
+            <div vertical layout class="toggle-section"> 
+                <div horizontal layout flex two>
+                    <div horizontal layout flex style="border-bottom: solid 1px #666;">
+                        <div flex style="text-align: center;" self-center><span id="team">Team</span></div>
+                        <div flex style="text-align: center; padding-top: 5px" self-center><paper-toggle-button id="teamOrSolo"></paper-toggle-button></div>
+                        <div flex style="text-align: center;" self-center><span id="solo">Solo</span></div>
+                    </div>
+                    
+                    <div horizontal layout flex style="border-bottom: solid 1px #666;"> 
+                        <div flex style="text-align: center;" self-center><span id="team">22</span></div>
+                        <div flex style="text-align: center; padding-top: 5px" self-center><paper-toggle-button id="teamOrSolo"></paper-toggle-button></div>
+                        <div flex style="text-align: center;" self-center><span id="solo">24</span></div>
                     </div>
                 </div>
-
+                <div horizontal layout flex one>
+                    <div flex style="text-align: center" class="sub-toggle" self-center>Driving As</div>
+                    <div flex style="text-align: center" class="sub-toggle" self-center>Driving Hours</div>
+                </div>
+            </div>
+            </paper-shadow>
+            
+            <!-- SPEED -->
+            <script type="text/javascript" src="dura.js"></script>
+            <style>
+                .speed-section {height: 60px; background-color: #fff;margin-top: 1px}
+                #speed {color: #4285f4;font-size: 28px; margin-top: 15px;
+                    
+                }
+                .speedLabel {color: #666;}
+                .minus {height: 50px; margin-left: 5px;text-align: left;margin-right: 0px;margin-bottom: 5px;min-width: 3.8em;color: #fb0a2a; font-weight: bold;}
+                .plus {height: 50px; margin-left: 5px;text-align: left;margin-right: 0px;margin-bottom: 5px;min-width: 3.8em;color: #0f9d58;font-weight: bold;}
+                .div-speed-button {width: 50px;}
+                #plus-five {margin-right: 5px;}
+            </style>
+            <paper-shadow z="1">
+            <div horizontal layout flex class="speed-section"> 
+                <div vertical layout flex one >
+                    <div flex two style="text-align: center;" >
+                        <span id="speed" onchange="">65</span>
+                    </div>
+                    
+                    <div flex one self-center style="margin-top: -30px;"> 
+                       <span class="speedLabel">MPH</span>
+                    </div>
+                </div>
+                <div horizontal layout flex four self-center>
+                    <div flex one class="div-speed-button">
+                        <paper-button class="minus" onClick="minusFive();getDuration();" raised>-5</paper-button>
+                    </div>
+                    <div flex one class="div-speed-button"> 
+                       <paper-button class="minus"  onClick="minusOne();getDuration();" raised>-1</paper-button>
+                    </div>
+                    <div flex one class="div-speed-button">
+                        <paper-button class="plus" onClick="plusOne();getDuration();" raised>+1</paper-button>
+                    </div>
+                    <div flex one class="div-speed-button">
+                        <paper-button class="plus" onClick="plusFive();getDuration();" id="plus-five" raised>+5</paper-button>
+                    </div>
+                </div>
+            </div>
+            </paper-shadow>
+            
+            </div>
+                <div horizontal layout flex two style="margin-top: -20px">
+                    <div flex three class="more">
+                        <a href="#third-stage">
+                            <paper-button class="more-button">more</paper-button>
+                        </a>
+                    </div>
+                    <div flex one>
+                        <a href="#first-stage">
+                            <paper-button class="more-button">
+                                <core-icon icon="expand-less" id="up"></core-icon>
+                            </paper-button>
+                        </a>
+                    </div>
+                </div>
+                <style>
+                    #third-stage {height: 600px}
+                </style>
+                <div vertical layout flex id="third-stage">
+                    
+                </div>
+    
                 <!-- END of CALC-->
+        
+        
             </div>
         </div>
         <div vertical layout flex cross-fade tile-cascade>

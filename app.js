@@ -1,4 +1,3 @@
-
         
         function getInfo(){
             findMe();
@@ -177,11 +176,11 @@
                 var ptimer = dispDate + "<span>d&nbsp;</span>" + dispHour + "<span>h&nbsp;</span>" + dispMins + "<span>min&nbsp;</span>" + dispSecs + "<span>sec&nbsp;</span>" + " &nbsp;&nbsp; <core-icon icon='hardware:keyboard-control' style='color:#4285f4;'></core-icon> &nbsp;&nbsp;" + ((dispDate * 24) + dispHour) + "<span>h&nbsp;</span>" + dispMins + "<span>min</span>";
 
                 if (dispMonth < 0) {
-                    document.getElementById('ptimeleft').innerHTML = "Pick-Up Date has passed the current date.";
+                    document.getElementById('ptimeleft').innerHTML = "Pick-Up Date has expired. &nbsp; <core-icon icon='error' style='color: #f00'>";
                 } else if (dispDate < 0) {
-                    document.getElementById('ptimeleft').innerHTML = "Pick-Up Date has passed the current date.";
+                    document.getElementById('ptimeleft').innerHTML = "Pick-Up Date has expired.";
                 } else if (dispMonth == 0 && dispDate == 0 && dispHour < 0) {
-                    document.getElementById('ptimeleft').innerHTML = "Pick-Up time has passed the current time.";
+                    document.getElementById('ptimeleft').innerHTML = "Pick-Up time has expired.";
                 } else {
                     document.getElementById('ptimeleft').innerHTML = ptimer;
                 }
@@ -227,11 +226,11 @@
                 var dtimer = dispDated + "<span>d&nbsp;</span>" + dispHourd + "<span>h&nbsp;</span>" + dispMinsd + "<span>min&nbsp;</span>" + dispSecsd + "<span>sec&nbsp;</span>" + "&nbsp;&nbsp; <core-icon icon='hardware:keyboard-control' style='color:#4285f4;'></core-icon> &nbsp;&nbsp;" + ((dispDated * 24) + dispHourd) + "<span>h&nbsp;</span>" + dispMinsd + "<span>min</span>";
 
                 if (dispMonthd < 0) {
-                    document.getElementById('dtimeleft').innerHTML = "Delivery Date has passed the current date.";
+                    document.getElementById('dtimeleft').innerHTML = "Delivery Date has expired. &nbsp; <core-icon icon='error' style='color: #f00'>";
                 } else if (dispDated < 0) {
-                    document.getElementById('dtimeleft').innerHTML = "Delivery Date has passed the current date.";
+                    document.getElementById('dtimeleft').innerHTML = "Delivery Date has expired.";
                 } else if (dispHourd < 0) {
-                    document.getElementById('dtimeleft').innerHTML = "Delivery time has passed the current time.";
+                    document.getElementById('dtimeleft').innerHTML = "Delivery time has expired.";
                 } else {
                     document.getElementById('dtimeleft').innerHTML = dtimer;
                 }
@@ -270,7 +269,7 @@
                 document.getElementById('ploc').innerHTML = ploc;
                 document.getElementById('ploc-weather-temp').innerHTML = toFah;
                 document.getElementById('ploc-weather-desc').innerHTML = weatherResult;
-                document.getElementById('ploc-second').innerHTML = ploc + " &nbsp;&nbsp;<span>( Pick-up Location )</span>";
+                document.getElementById('ploc-second').innerHTML = ploc;
             });
 
             function getWeatherTwo(callback) {
@@ -355,7 +354,6 @@ function errorFunction(){
              for (var i=0; i<results[0].address_components.length; i++) {
             for (var b=0;b<results[0].address_components[i].types.length;b++) {
 
-            //there are different types that might hold a city admin_area_lvl_1 usually does in come cases looking for sublocality type will be more appropriate
                 if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
                     //this is the object you are looking for
                     state = results[0].address_components[4];
@@ -369,7 +367,7 @@ function errorFunction(){
         var cityName = city.short_name;
         var cityUpper = cityName.toUpperCase();
         var cityState = cityUpper + ", " +stateName;
-        document.getElementById('currentCity').innerHTML = cityState + " &nbsp;&nbsp;<span>( Your Current Location )</span>";
+        document.getElementById('currentCity').innerHTML = cityState;
 
         } else {
           document.getElementById('currentCity').innerHTML = "No results found";
@@ -392,9 +390,8 @@ function getDistanceP(){
     var dCity = document.getElementById('dloc'),
         dlocCity = dCity.innerHTML;
     
-    document.getElementById('ploc-second-delivery').innerHTML = plocCity + " &nbsp;&nbsp;<span>( Pick-up Location )</span>";
+    document.getElementById('ploc-second-delivery').innerHTML = plocCity;
     
-    document.getElementById('dloc-second').innerHTML = dlocCity + " &nbsp;&nbsp;<span>( Delivery Location )</span>";
     var origin1 = yourCity,
         origin2 = plocCity,
         destination1 = plocCity,
@@ -416,28 +413,67 @@ function getDistanceP(){
     );
 
     function callback(response, status) {
-
+        
+        function inMiles(distValue){
+            
+            var distRaw = distValue * .000621,
+                distVal = Math.round(distRaw);
+            return distVal + "<span>&nbsp;mi</span>";
+            //return distVal;
+        }
+        
+        /*
+        function getDuration(duraValue){
+            
+            if (duraValue > 3600){
+                var hour = duraValue / 60;
+                if (hour % 2 == 0){
+                    return hour;   
+                } else {
+                    var flrHour = Math.floor(hour / 60),
+                        deciMin = hour % 1,
+                        flrMins = Math.floor(deciMin * 60),
+                        complete = flrHour + "<span>&nbsp;h&nbsp;&nbsp;&nbsp;</span>" + flrMins + "<span>&nbsp;m</span>";
+                    return complete;
+                }
+            } else {
+                var mins = Math.floor(duraValue / 60),
+                    comp = mins + "<span>&nbsp;m</span>";
+                return comp;
+            }
+            return complete;
+        }
+        */
+       
+        
         if(status=="OK") {
+            
+                        
             var distanceValue = response.rows[0].elements[0].distance.value;
             var distanceText = response.rows[0].elements[0].distance.text;
-            document.getElementById('p-distance').innerHTML = distanceText;
+            document.getElementById('p-distance').innerHTML = inMiles(distanceValue);
             
-            var durationValue = response.rows[0].elements[0].duration.value;
-            var durationText = response.rows[0].elements[0].duration.text;
-            document.getElementById('p-duration').innerHTML = durationText;
+            //var durationValue = response.rows[0].elements[0].duration.value;
+            //var durationText = response.rows[0].elements[0].duration.text;
+            //document.getElementById('p-duration').innerHTML = getDuration(durationValue);
             
             var ddistanceValue = response.rows[1].elements[1].distance.value;
             var ddistanceText = response.rows[1].elements[1].distance.text;
-            document.getElementById('d-distance').innerHTML = ddistanceText;
+            document.getElementById('d-distance').innerHTML = inMiles(ddistanceValue);
             
-            var ddurationValue = response.rows[1].elements[1].duration.value;
-            var ddurationText = response.rows[1].elements[1].duration.text;
-            document.getElementById('d-duration').innerHTML = ddurationText;
+            //var ddurationValue = response.rows[1].elements[1].duration.value;
+            //var ddurationText = response.rows[1].elements[1].duration.text;
+            //document.getElementById('d-duration').innerHTML = getDuration(ddurationValue);
         } else {
             alert("Error: " + status);
         }
     }
 }
+
+
+
+
+
 
 
 
