@@ -1,29 +1,25 @@
         
-        function getInfo(){
-            findMe();
-            initialize();
-            getDistanceP();
-        }
+       
         function findMe() {
-            var text = document.getElementById('sms').value;
+            var text = document.getElementById('sms').value,
             //Get ORDER #
-            var o = text.indexOf('Order:');
-            var p = text.indexOf('|');
-            var order = text.substring(o + 6, p - 1);
-            if (text != null) {
+                o = text.indexOf('Order:'),
+                p = text.indexOf('|'),
+                order = text.substring(o + 6, p - 1);
+            if (text !== null) {
                 document.getElementById('orderNum').innerHTML = "ORDER: " + order;
             } else {
                 document.getElementById('orderNum').innerHTML = "ORDER: ";
             }
 
             // Get Pick-up CITY
-            var pu = text.indexOf('P/U:');
-            var firstComma = text.indexOf(',');
-            var pcity = text.substring(pu + 4, firstComma);
+            var pu = text.indexOf('P/U:'),
+                firstComma = text.indexOf(','),
+                pcity = text.substring(pu + 4, firstComma),
 
             //Get Pick-up STATE
-            var pstate = text.substring(firstComma + 1, firstComma + 3);
-            var ploc = pcity + ", " + pstate;
+                pstate = text.substring(firstComma + 1, firstComma + 3),
+                ploc = pcity + ", " + pstate;
 
             //PICK-UP LOCATION FULL
             if (text !== "") {
@@ -235,7 +231,7 @@
                     document.getElementById('dtimeleft').innerHTML = dtimer;
                 }
 
-                runTimer();
+                //runTimer();
 
             }
             //DURATION
@@ -346,7 +342,7 @@ function errorFunction(){
     var latlng = new google.maps.LatLng(lat, lng);
     geocoder.geocode({'latLng': latlng}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-      console.log(results);
+      //console.log(results);
         if (results[1]) {
          //formatted address
           var fa = results[0].formatted_address;
@@ -470,7 +466,11 @@ function getDistanceP(){
     }
 }
 
-
+ function getInfo() {
+            findMe();
+            initialize();
+            getDistanceP();
+        }
 
 
 
