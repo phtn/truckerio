@@ -100,7 +100,7 @@
             <paper-icon-button icon="subject"></paper-icon-button>
         </paper-tab>
         <paper-tab onclick="document.querySelector('#widgets-toast').show()">
-            <paper-icon-button icon="apps"></paper-icon-button>
+            <paper-icon-button icon="image:grain"></paper-icon-button>
         </paper-tab>
         <paper-tab onclick="document.querySelector('#saved-toast').show()">
             <paper-icon-button icon="turned-in"></paper-icon-button>
@@ -118,15 +118,16 @@
     <paper-toast id="reports-toast" text="Tools Dashboard" duration="5500"></paper-toast>
 
     <core-animated-pages flex transitions="slide-up slide-down cross-fade tile-cascade" class="widgets" selected="0">
-        <div verical layout flex crossfade slide-up style="background-color: #eee">
-            <div id="cards" cross-fade slide-up id="top">
-                <polymer-ui-card swipeable touch-action="pan-y" class="feed">
-                    Latest News
+        <div verical layout flex crossfade slide-up style="background-color: #222">
+            <div id="cards" cross-fade slide-up id="top" style="background-color: #222">
+                <polymer-ui-card touch-action="pan-y" id="landing">
+                    <div><br /><br />
+                    <h1 id="header-main">Welcome to Trucker App</h1><br />
+                    <h3 id="subtitle-main">Sign up today! <span>&nbsp;its FREE</span></h3>
+                    </div>
                 </polymer-ui-card>
 
-                <polymer-ui-card swipeable touch-action="pan-y" class="feed">Truck Parts &copy;</polymer-ui-card>
-                <polymer-ui-card swipeable touch-action="pan-y" class="feed">Ads</polymer-ui-card>
-                <polymer-ui-card swipeable touch-action="pan-y" class="feed">Ads 2</polymer-ui-card>
+                <div class="footer">hello</div>
             </div>
             <script>
                 document.addEventListener('polymer-ready', function () {
@@ -137,6 +138,10 @@
                 })
             </script>
             <style>
+                #header-main {color: #4285f4;font-size: 30px;margin-top: 10px;}
+                #subtitle-main {color: #999; margin-top: -55px; margin-left: 10px;font-size: 16px;font-weight: bolder;}
+                #subtitle-main span {color: #7fbb00; margin-top: -50px; margin-left: 10px;font-size: 16px;}
+                .footer {height: 100px}
                 #cards {
                     margin: 0 auto;
                     //background: #eee;
@@ -144,9 +149,12 @@
                     -webkit-user-select: none;
                     -moz-user-select: none;
                 }
-                polymer-ui-card {
+                polymer-ui-card#landing {
+                    background-image: url(blur.jpg);
+                    background-size: 100% 100%;
+                    background-repeat: no-repeat;
                     display: block;
-                    height: 100px;
+                    height: 250px;
                     width: 100%;
                     margin: 5px auto;
                     padding: 30px;
@@ -865,7 +873,7 @@
                             <div style="padding-top:2px;height:30px;margin-left:5px">
                                 <core-icon icon="image:looks-two"></core-icon>
                             </div>
-                            <div flex self-center style="font-weight:bold;height:25px;margin-left:5px;">TRIP INFO</div>
+                            <div flex self-center style="font-weight:bold;height:25px;margin-left:5px;">PICK-UP TO DROP</div>
                         </div>
                     </paper-shadow>
                     <paper-shadow z="1">
@@ -930,7 +938,7 @@
             
                 <!-- DELIVERY -->
                     <paper-shadow z="1">
-                        <div class="subheader-second"><span>&nbsp;&nbsp;FOR DELIVERY</span></div>
+                        <div class="subheader-second"><span>&nbsp;&nbsp;FOR DROP</span></div>
                     </paper-shadow>
                     <div class="border"></div>
                     <style>
@@ -951,8 +959,8 @@
                         </div>
                         <div flex class="hori-border-second"><hr id="hr-second"></hr></div>
                         <div horizontal layout flex>
-                            <div flex two class="cn-second"><span id="dloc-second">DELIVERY LOCATION</span></div>
-                            <div flex one class="subtitle-second"><span class="subtitle-second"><core-icon icon="chevron-left" class="chevron"></core-icon>&nbsp;Delivery Location</span></div>
+                            <div flex two class="cn-second"><span id="dloc-second">DROP LOCATION</span></div>
+                            <div flex one class="subtitle-second"><span class="subtitle-second"><core-icon icon="chevron-left" class="chevron"></core-icon>&nbsp;Drop Location</span></div>
                         </div>
                     </div>
                 </div>
