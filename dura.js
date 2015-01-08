@@ -91,8 +91,8 @@ function getDuration() {
             var fdHour = Math.floor(dDura);
             var decid = (dDura % 1);
             var fdMins = Math.floor(decid * 60);
-            document.getElementById('d-duration').innerHTML = dDura;
-            //document.getElementById('d-duration').innerHTML = fdHour + "<span>&nbsp;h&nbsp;&nbsp;</span>" + fdMins + "<span>&nbsp;m</span>";
+            //document.getElementById('d-duration').innerHTML = dDura;
+            document.getElementById('d-duration').innerHTML = fdHour + "<span>&nbsp;h&nbsp;&nbsp;</span>" + fdMins + "<span>&nbsp;m</span>";
         } else {
             dDura *= 60;
             //document.getElementById('d-duration').innerHTML = dDura;

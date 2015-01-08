@@ -1,8 +1,6 @@
-        
-       
         function findMe() {
             var text = document.getElementById('sms').value,
-            //Get ORDER #
+                //Get ORDER #
                 o = text.indexOf('Order:'),
                 p = text.indexOf('|'),
                 order = text.substring(o + 6, p - 1);
@@ -17,7 +15,7 @@
                 firstComma = text.indexOf(','),
                 pcity = text.substring(pu + 4, firstComma),
 
-            //Get Pick-up STATE
+                //Get Pick-up STATE
                 pstate = text.substring(firstComma + 1, firstComma + 3),
                 ploc = pcity + ", " + pstate;
 
@@ -314,111 +312,109 @@
             });
         });
 
-var geocoder;
+        var geocoder;
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
-} 
-//Get the latitude and the longitude;
-function successFunction(position) {
-    var lat = position.coords.latitude;
-    var lng = position.coords.longitude;
-    codeLatLng(lat, lng);
-}
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+        }
+         //Get the latitude and the longitude;
+        function successFunction(position) {
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            codeLatLng(lat, lng);
+        }
 
-function errorFunction(){
-    document.getElementById('currentCity').innerHTML = "Geocoder failed";
-}
+        function errorFunction() {
+            document.getElementById('currentCity').innerHTML = "Geocoder failed";
+        }
 
-  function initialize() {
-    geocoder = new google.maps.Geocoder();
+        function initialize() {
+            geocoder = new google.maps.Geocoder();
+        }
 
+        function codeLatLng(lat, lng) {
 
+            var latlng = new google.maps.LatLng(lat, lng);
+            geocoder.geocode({
+                'latLng': latlng
+            }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    //console.log(results);
+                    if (results[1]) {
+                        //formatted address
+                        var fa = results[0].formatted_address;
+                        //find country name
+                        for (var i = 0; i < results[0].address_components.length; i++) {
+                            for (var b = 0; b < results[0].address_components[i].types.length; b++) {
 
-  }
+                                if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
+                                    //this is the object you are looking for
+                                    state = results[0].address_components[4];
+                                    city = results[0].address_components[2];
+                                    break;
+                                }
+                            }
+                        }
+                        //city data
+                        var stateName = state.short_name;
+                        var cityName = city.short_name;
+                        var cityUpper = cityName.toUpperCase();
+                        var cityState = cityUpper + ", " + stateName;
+                        document.getElementById('currentCity').innerHTML = cityState;
 
-  function codeLatLng(lat, lng) {
-
-    var latlng = new google.maps.LatLng(lat, lng);
-    geocoder.geocode({'latLng': latlng}, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-      //console.log(results);
-        if (results[1]) {
-         //formatted address
-          var fa = results[0].formatted_address;
-        //find country name
-             for (var i=0; i<results[0].address_components.length; i++) {
-            for (var b=0;b<results[0].address_components[i].types.length;b++) {
-
-                if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
-                    //this is the object you are looking for
-                    state = results[0].address_components[4];
-                    city  = results[0].address_components[2];
-                    break;
+                    } else {
+                        document.getElementById('currentCity').innerHTML = "No results found";
+                    }
+                } else {
+                    document.getElementById('currentCity').innerHTML = "Geocoder failed due to: " + status;
                 }
-            }
+            });
         }
-        //city data
-        var stateName = state.short_name;
-        var cityName = city.short_name;
-        var cityUpper = cityName.toUpperCase();
-        var cityState = cityUpper + ", " +stateName;
-        document.getElementById('currentCity').innerHTML = cityState;
 
-        } else {
-          document.getElementById('currentCity').innerHTML = "No results found";
-        }
-      } else {
-        document.getElementById('currentCity').innerHTML = "Geocoder failed due to: " + status;
-      }
-    });
-  }
+         // GET DISTANCE
+        function getDistanceP() {
 
-// GET DISTANCE
-function getDistanceP(){
-    
-    var yCity = document.getElementById('currentCity'),
-        yourCity = yCity.innerHTML;
+            var yCity = document.getElementById('currentCity'),
+                yourCity = yCity.innerHTML;
 
-    var pCity = document.getElementById('ploc'),
-        plocCity = pCity.innerHTML;
-    
-    var dCity = document.getElementById('dloc'),
-        dlocCity = dCity.innerHTML;
-    
-    document.getElementById('ploc-second-delivery').innerHTML = plocCity;
-    
-    var origin1 = yourCity,
-        origin2 = plocCity,
-        destination1 = plocCity,
-        destination2 = dlocCity,
-        service = new google.maps.DistanceMatrixService();
-    
-    
+            var pCity = document.getElementById('ploc'),
+                plocCity = pCity.innerHTML;
 
-    service.getDistanceMatrix(
-        {
-            origins: [origin1, origin2],
-            destinations: [destination1, destination2],
-            travelMode: google.maps.TravelMode.DRIVING,
-            unitSystem: google.maps.UnitSystem.IMPERIAL,
-            avoidHighways: false,
-            avoidTolls: false
-        }, 
-        callback
-    );
+            var dCity = document.getElementById('dloc'),
+                dlocCity = dCity.innerHTML;
 
-    function callback(response, status) {
-        
-        function inMiles(distValue){
-            
-            var distRaw = distValue * .000621,
-                distVal = Math.round(distRaw);
-            return distVal + "<span>&nbsp;mi</span>";
-            //return distVal;
-        }
-        
-        /*
+            document.getElementById('ploc-second-delivery').innerHTML = plocCity;
+
+            var origin1 = yourCity,
+                origin2 = plocCity,
+                destination1 = plocCity,
+                destination2 = dlocCity,
+                service = new google.maps.DistanceMatrixService();
+
+
+
+            service.getDistanceMatrix({
+                    origins: [origin1, origin2],
+                    destinations: [destination1, destination2],
+                    travelMode: google.maps.TravelMode.DRIVING,
+                    unitSystem: google.maps.UnitSystem.IMPERIAL,
+                    avoidHighways: false,
+                    avoidTolls: false
+                },
+                callback
+            );
+
+            function callback(response, status) {
+
+                function inMiles(distValue) {
+
+                    var distRaw = distValue * .000621,
+                        distVal = Math.round(distRaw);
+                    return distVal + "<span>&nbsp;mi</span>";
+                    //return distVal;
+                }
+
+                /*
         function getDuration(duraValue){
             
             if (duraValue > 3600){
@@ -440,46 +436,34 @@ function getDistanceP(){
             return complete;
         }
         */
-       
-        
-        if(status=="OK") {
-            
-                        
-            var distanceValue = response.rows[0].elements[0].distance.value;
-            var distanceText = response.rows[0].elements[0].distance.text;
-            document.getElementById('p-distance').innerHTML = inMiles(distanceValue);
-            
-            //var durationValue = response.rows[0].elements[0].duration.value;
-            //var durationText = response.rows[0].elements[0].duration.text;
-            //document.getElementById('p-duration').innerHTML = getDuration(durationValue);
-            
-            var ddistanceValue = response.rows[1].elements[1].distance.value;
-            var ddistanceText = response.rows[1].elements[1].distance.text;
-            document.getElementById('d-distance').innerHTML = inMiles(ddistanceValue);
-            
-            //var ddurationValue = response.rows[1].elements[1].duration.value;
-            //var ddurationText = response.rows[1].elements[1].duration.text;
-            //document.getElementById('d-duration').innerHTML = getDuration(ddurationValue);
-        } else {
-            alert("Error: " + status);
-        }
-    }
-}
 
- function getInfo() {
+
+                if (status == "OK") {
+
+
+                    var distanceValue = response.rows[0].elements[0].distance.value;
+                    var distanceText = response.rows[0].elements[0].distance.text;
+                    document.getElementById('p-distance').innerHTML = inMiles(distanceValue);
+
+                    //var durationValue = response.rows[0].elements[0].duration.value;
+                    //var durationText = response.rows[0].elements[0].duration.text;
+                    //document.getElementById('p-duration').innerHTML = getDuration(durationValue);
+
+                    var ddistanceValue = response.rows[1].elements[1].distance.value;
+                    var ddistanceText = response.rows[1].elements[1].distance.text;
+                    document.getElementById('d-distance').innerHTML = inMiles(ddistanceValue);
+
+                    //var ddurationValue = response.rows[1].elements[1].duration.value;
+                    //var ddurationText = response.rows[1].elements[1].duration.text;
+                    //document.getElementById('d-duration').innerHTML = getDuration(ddurationValue);
+                } else {
+                    alert("Error: " + status);
+                }
+            }
+        }
+
+        function getInfo() {
             findMe();
             initialize();
             getDistanceP();
         }
-
-
-
-
-
-
-
-
-
-
-    
-    

@@ -3,7 +3,7 @@
 
 <head>
     <title>The Trucker App</title>
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, height=device-heght, minimum-scale=1, initial-scale=1, user-scalable=no">
     <meta name="theme-color" content="#222">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -100,7 +100,7 @@
             <paper-icon-button icon="subject"></paper-icon-button>
         </paper-tab>
         <paper-tab onclick="document.querySelector('#widgets-toast').show()">
-            <paper-icon-button icon="image:grain"></paper-icon-button>
+            <paper-icon-button icon="image:grain" id="grain"></paper-icon-button>
         </paper-tab>
         <paper-tab onclick="document.querySelector('#saved-toast').show()">
             <paper-icon-button icon="turned-in"></paper-icon-button>
@@ -112,36 +112,41 @@
     <style>
     </style>
     <!-- TOAST -->
-    <paper-toast id="live-toast" text="News & Updates" duration="5500"></paper-toast>
-    <paper-toast id="widgets-toast" text="Swift Load Preview" duration="5500"></paper-toast>
-    <paper-toast id="saved-toast" text="Saved List" duration="5500"></paper-toast>
-    <paper-toast id="reports-toast" text="Tools Dashboard" duration="5500"></paper-toast>
+    <paper-toast id="live-toast" text="News & Updates" duration="3000"></paper-toast>
+    <paper-toast id="widgets-toast" text="Swift Load Preview" duration="3000"></paper-toast>
+    <paper-toast id="saved-toast" text="Saved List" duration="3000"></paper-toast>
+    <paper-toast id="reports-toast" text="Tools Dashboard" duration="3000"></paper-toast>
 
     <core-animated-pages flex transitions="slide-up slide-down cross-fade tile-cascade" class="widgets" selected="0">
         <div verical layout flex crossfade slide-up style="background-color: #222">
             <div id="cards" cross-fade slide-up id="top" style="background-color: #222">
                 <polymer-ui-card touch-action="pan-y" id="landing">
-                    <div><br /><br />
+                    <div self-center><br /><br />
                     <h1 id="header-main">Welcome to Trucker App</h1><br />
-                    <h3 id="subtitle-main">Sign up today! <span>&nbsp;its FREE</span></h3>
+                        <div id="start-here" self-center><paper-button id="start-here-button" raised onclick="startHere()"><span>START HERE <core-icon icon="av:play-arrow" id="play-icon"></core-icon></span></paper-button></div>
+                    
                     </div>
                 </polymer-ui-card>
 
-                <div class="footer">hello</div>
+                <div class="footer" flex self-center>Copyright 2015 &copy;</div>
             </div>
             <script>
-                document.addEventListener('polymer-ready', function () {
-                    document.querySelector('#cards').addEventListener(
-                        'polymer-card-swipe-away', function (e) {
-                            e.target.parentNode.removeChild(e.target);
-                        });
-                })
+                function startHere(){
+                    var grainPage = document.querySelector('core-animated-pages');
+                    var grainTab = document.querySelector('paper-tabs');
+                    grainPage.selected = 1;
+                    grainTab.selected = 1;
+                }
             </script>
             <style>
+                #start-here {width: 200px;height: 70px;color: green}
+                #start-here-button {font-size: 24px;color: #fff; padding: 0px;background-color: #000;opacity: .9;height: inherit; color: #4285f4}
+                #start-here-button span {opacity: 1}
+                #play-icon {margin-top: -3px}
                 #header-main {color: #4285f4;font-size: 30px;margin-top: 10px;}
                 #subtitle-main {color: #999; margin-top: -55px; margin-left: 10px;font-size: 16px;font-weight: bolder;}
                 #subtitle-main span {color: #7fbb00; margin-top: -50px; margin-left: 10px;font-size: 16px;}
-                .footer {height: 100px}
+                .footer {height: 100px; text-align: center;color: #4285f4}
                 #cards {
                     margin: 0 auto;
                     //background: #eee;
@@ -201,11 +206,13 @@
                 }
             </style>
 
-            <div style="height:400px;width: inherit;" cross-fade slide-up>
-                <div flex one id="tripPaste" style="margin-bottom:20px; text-align:center;"><span>Paste SMS <core-icon icon="speaker-notes"></core-icon> below</span>
+            <div style="height:400px;width: inherit;" cross-fade slide-up >
+                <div flex one id="tripPaste" style="margin-bottom:20px; text-align:center;"><span>Copy & Paste the Swift Load text message below</span>
                 </div>
                 <div flex three>
-                    <textarea id="sms" cols="25" rows="8" onchange="getInfo()"></textarea>
+                    <textarea id="sms" cols="25" rows="8" onchange="getInfo()" placeholder="Example:          Order:KD76757 | P/U:MINDEN,NV 12/12 00:01-12/12 17:15 | DEL:BUFFALO,NY 12/14 00:01-12/14 18:00 | Please accept/reject.
+
+"></textarea>
                 </div>
                 <div horizontal layout flex two style="">
                     <div flex one></div>
@@ -216,7 +223,7 @@
                     </div>
                     <div flex two>
                         <a href="#first-stage">
-                            <paper-button id="submitlbl" onclick="">Calculate
+                            <paper-button id="submitlbl" onclick="">OK
                                 <core-icon icon="check" id="submiticon"></core-icon>
                             </paper-button>
                         </a>
@@ -234,7 +241,7 @@
                             <div style="padding-top:2px;height:30px;margin-left:5px">
                                 <core-icon icon="image:looks-one"></core-icon>
                             </div>
-                            <div flex self-center style="font-weight:bold;height:25px;margin-left: 5px;">From SMS Data Results</div>
+                            <div flex self-center style="font-weight:bold;height:25px;margin-left: 5px;">Time Remaining | Temperature | Weather</div>
                         </div>
                     </paper-shadow>
                     <style>
